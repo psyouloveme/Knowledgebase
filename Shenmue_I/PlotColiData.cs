@@ -133,6 +133,12 @@ public class PlotColiData : MonoBehaviour
       byte[] coliSizeBytes = reader.ReadBytes(4);
       UInt32 coliSize = BitConverter.ToUInt32(coliSizeBytes, 0);
       Debug.Log("Found a COLI section with size " + coliSize);
+
+      byte[] coliData = reader.ReadBytes(coliSize);
+      char[] coliEnd = reader.ReadChars(4);
+      Debug.Log("Got coli term " + coliEnd);
+
+
  
       // then process the coli data as in coli2floats.rb
       bool coliFound = false;

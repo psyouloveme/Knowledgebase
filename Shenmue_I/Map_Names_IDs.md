@@ -3,8 +3,7 @@
 (*Note*: If someone wants to convert this to a markdown table, feel free to do it.)
 
 ```
-NAME | ID | LOCATION | APPERANCE | ENTRY POINTS
-
+| NAME | ID | LOCATION | APPERANCE | ENTRY POINTS |
 Abe Store Candy Shop 	JABE 	Sakuragaoka 	SCENE 01 	 
 Ajiichi Chinese Restaurant 	DCHA 	Dobuita 	SCENE 01 	 
 Alpha Trading Office 	MFSY --> ALPHA (IPAC) 	Harbor 	SCENE 03 	N/A Sub IPAC Data for Harbor 
