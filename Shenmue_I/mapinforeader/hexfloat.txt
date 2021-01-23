@@ -1,0 +1,32 @@
+Single precision (32 bits):
+Binary:     Status: 
+normal
+
+Bit 31
+Sign Bit
+1
+
+0: +
+1: -
+ 
+Bits 30 - 23
+Exponent Field
+10000100
+
+Decimal value of exponent field and exponent
+132
+ - 127 = 
+5
+
+ 
+Bits 22 - 0
+Significand
+1 .01000001001001101100011
+
+Decimal value of the significand
+1.2544979
+
+Hexadecimal: 
+C2209363
+   Decimal: 
+-40.143932
