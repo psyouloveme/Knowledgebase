@@ -45,7 +45,6 @@ namespace mapinforeader
                     using (StreamWriter sw = new StreamWriter(f)) {
                         s.ForEach(g => sw.WriteLine(g));
                     }
-                    s.ForEach(g => Console.WriteLine(g));
                     Console.WriteLine("-----------------------------------");
                     FileStream l = File.Open("D000_COLS_COLI0_All_ColiObjs.txt", FileMode.Create);
                     using (StreamWriter sw = new StreamWriter(l)) {
@@ -62,18 +61,73 @@ namespace mapinforeader
                             });
                         });
                     }
-                    c.Colis.ForEach(h => {
-                        h.ColiObjs.ForEach(j => {
-                            Console.Write(j.ObjType.ToString("X2") + " ");
-                            if (j.ObjSubTypeOrSomething.HasValue) {
-                                Console.Write(j.ObjSubTypeOrSomething.Value.ToString("X2") + " ");
-                            } else {
-                                Console.Write("-- ");
-                            }
-                            Console.Write(j.ObjCount + " ");
-                            Console.Write(j.ObjData.Count + "\n");
+                    Console.WriteLine("-----------------------------------");
+                    l = File.Open("D000_COLS_COLI0_All_ColiObjs_DATA.txt", FileMode.Create);
+                    using (StreamWriter sw = new StreamWriter(l)) {
+                        c.Colis.ForEach(h => {
+                            h.ColiObjs.ForEach(j => {
+                                sw.Write(j.ObjType.ToString("X2") + " ");
+                                if (j.ObjSubTypeOrSomething.HasValue) {
+                                    sw.Write(j.ObjSubTypeOrSomething.Value.ToString("X2") + " ");
+                                } else {
+                                    sw.Write("-- ");
+                                }
+                                sw.Write(j.ObjCount + " ");
+                                sw.Write(j.ObjData.Count + "\n");
+                                for(int i = 0; i < j.ObjData.Count; i++) {
+                                    if (j.ObjType == 0 && j.ObjSubTypeOrSomething.HasValue && j.ObjSubTypeOrSomething.Value == 2) {
+                                        sw.WriteLine($"({j.ObjData[i]}, {j.ObjData[++i]})");
+                                    } else {
+                                        sw.WriteLine(j.ObjData[i]);
+                                    }
+                                }
+                            });
                         });
-                    });
+                    }
+                    Console.WriteLine("-----------------------------------");
+                    c.Colis.Aggregate(float.MinValue,
+                        (max, next) => {
+                            float colMax = next.ColiObjs.Aggregate(max,
+                                (colmax, next) => {
+                                    float dataMax = next.ObjData.Aggregate(colmax,
+                                        (datmax, next) => {
+                                            return next > datmax ? next : datmax; 
+                                        },
+                                        d => d
+                                    );
+                                    Console.WriteLine("Found max: " + dataMax);
+                                    return dataMax > colmax ? dataMax : colmax;
+                                },
+                                cm => cm
+                            );
+                            Console.WriteLine("Found COL max: " + colMax);
+                            return colMax > max ? colMax : max;
+                        },
+                        cc => cc
+                    );
+                    c.Colis.Aggregate(float.MaxValue,
+                        (min, next) => {
+                            float colMin = next.ColiObjs.Aggregate(min,
+                                (colmin, next) => {
+                                    float dataMin = next.ObjData.Aggregate(colmin,
+                                        (datmin, next) => {
+                                            if (next == float.NaN) {
+                                                Console.WriteLine("FOUND A NAN");
+                                            }
+                                            return next < datmin ? next : datmin; 
+                                        },
+                                        d => d
+                                    );
+                                    Console.WriteLine("Found min: " + dataMin);
+                                    return dataMin < colmin ? dataMin : colmin;
+                                },
+                                cm => cm
+                            );
+                            Console.WriteLine("Found COL min: " + colMin);
+                            return colMin < min ? colMin : min;
+                        },
+                        cc => cc
+                    );
                 }
             }
         }
