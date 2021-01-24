@@ -1,11 +1,9 @@
 using System;
 using System.Drawing;
 using System.IO;
-using System.Text;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-
+using mapinforeader.Utils;
 
 namespace mapinforeader
 {
@@ -102,7 +100,8 @@ namespace mapinforeader
             if (coliSize > 0)
             {
                 coliInfo.ContentOffset = reader.BaseStream.Position;
-                coliInfo.Content = reader.ReadBytes(Convert.ToInt32(coliSize) - 8);
+                coliInfo.Content = reader.ReadBytes(Convert.ToInt32(coliSize));
+                SMFileUtils.WriteBytesToFile("D000_MAPINFO_COLS_COLI0_DEBUG.BIN.bytes", coliInfo.Content);
             }
             else
             {
@@ -222,7 +221,8 @@ namespace mapinforeader
                         cols.Id_Maybe = coliIdMaybeInt;
                         cols.ContentOffset = reader.BaseStream.Position;
                         // subtract the 4 bytes for the size, read the remainder of the coli content
-                        cols.Content = reader.ReadBytes(Convert.ToInt32(colsSize) - 12);
+                        cols.Content = reader.ReadBytes(Convert.ToInt32(colsSize) - 16);
+                        SMFileUtils.WriteBytesToFile("COLS_D000_DEBUG.BIN.bytes", cols.Content);
                     }
                 }
             }
