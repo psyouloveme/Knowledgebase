@@ -25,29 +25,40 @@ namespace mapinforeader
         {
             public class ColiObj {
                 public uint ObjType { get; set; }
-                public uint ObjSubTypeOrSomething { get; set; }
+                public uint? ObjSubTypeOrSomething { get; set; }
                 public uint ObjCount { get; set; }
-                public float[] ObjData { get; set; }
+                public List<float> ObjData { get ;set; }
             }
 
             public void ReadColiObjs() {
-                ColiObjs = new List<ColiObj>();
-                int i = 0;
+                this.ColiObjs = new List<ColiObj>();
                 MemoryStream s = new MemoryStream(this.Content);
                 using (BinaryReader r = new BinaryReader(s)) {
-                    while(i < this.Content.Length) {
+                    while(r.BaseStream.Position < this.Content.Length) {
                         ColiObj newObj = new ColiObj();
+                        newObj.ObjData = new List<float>();
+                        
                         byte[] objTypeBytes = r.ReadBytes(4);
                         newObj.ObjType = BitConverter.ToUInt32(objTypeBytes);
 
-                        byte[] nextWord = r.ReadBytes(4);
-                        byte[] nextNextWord = r.ReadBytes(4);
-                        try {
-                            BitConverter.ToSingle(nextNextWord);
-                        } catch {
-                            
+                        byte[] nextWord = r.ReadBytes(4), 
+                            nextNextWord = r.ReadBytes(4), 
+                            checkArray = new byte[3],
+                            buffer = new byte[4];
+                        Array.Copy(nextNextWord, 1, checkArray, 0, 3);
+                        if (Array.TrueForAll(checkArray, p => p == 0)) {
+                            newObj.ObjSubTypeOrSomething = BitConverter.ToUInt32(nextWord);
+                            newObj.ObjCount = BitConverter.ToUInt32(nextNextWord);
+                        } else {
+                            newObj.ObjCount = BitConverter.ToUInt32(nextWord);
+                            newObj.ObjData.Add(BitConverter.ToSingle(nextNextWord));
                         }
-
+                        buffer = r.ReadBytes(4);
+                        while (!Array.TrueForAll(buffer, b => b == 0xFF)) {
+                            newObj.ObjData.Add(BitConverter.ToSingle(buffer));
+                            buffer = r.ReadBytes(4);
+                        }
+                        this.ColiObjs.Add(newObj);
                     }
                 }
             }
@@ -59,22 +70,22 @@ namespace mapinforeader
             public uint Size { get; set; }
             public byte[] Content { get; set; }
         }
-        long HeaderOffset { get; set; }
-        long SizeOffset { get; set; }
-        long ContentOffset { get; set; }
-        long IdentifierOffset { get; set; }
-        long Id_MaybeOffset { get; set; }
-        byte[] Content { get; set; }
-        uint Size { get; set; }
-        string Identifier { get; set; }
-        uint Id_Maybe { get; set; }
-        List<ColiInfo> Colis { get; set; }
-        byte[] Hght { get; set; }
-        byte[] Evnt { get; set; }
-        byte[] Undu { get; set; }
-        byte[] Sond { get; set; }
-        byte[] Prop { get; set; }
-        byte[] Walk { get; set; }
+        public long HeaderOffset { get; set; }
+        public long SizeOffset { get; set; }
+        public long ContentOffset { get; set; }
+        public long IdentifierOffset { get; set; }
+        public long Id_MaybeOffset { get; set; }
+        public byte[] Content { get; set; }
+        public uint Size { get; set; }
+        public string Identifier { get; set; }
+        public uint Id_Maybe { get; set; }
+        public List<ColiInfo> Colis { get; set; }
+        public byte[] Hght { get; set; }
+        public byte[] Evnt { get; set; }
+        public byte[] Undu { get; set; }
+        public byte[] Sond { get; set; }
+        public byte[] Prop { get; set; }
+        public byte[] Walk { get; set; }
 
         public static IEnumerable<string> HeaderList
         {
@@ -112,11 +123,12 @@ namespace mapinforeader
                 coliInfo.Content = null;
             }
             // var floatList = coliInfo.GetContentAsPoints();
-
+            
             if (this.Colis == null)
             {
                 this.Colis = new List<ColiInfo>();
             }
+            coliInfo.ReadColiObjs();
             this.Colis.Add(coliInfo);
         }
 
