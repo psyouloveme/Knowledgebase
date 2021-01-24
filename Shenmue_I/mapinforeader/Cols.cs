@@ -23,38 +23,41 @@ namespace mapinforeader
 
         public class ColiInfo
         {
-            public class ColiPoint {
-                public uint s1 { get; set; }
-                public uint s2 { get; set; }
-                public float x { get; set; }
-                public float y { get; set; }
-                public ColiPoint(byte[] bytes) {
+            public class ColiObj {
+                public uint ObjType { get; set; }
+                public uint ObjSubTypeOrSomething { get; set; }
+                public uint ObjCount { get; set; }
+                public float[] ObjData { get; set; }
+            }
 
+            public void ReadColiObjs() {
+                ColiObjs = new List<ColiObj>();
+                int i = 0;
+                MemoryStream s = new MemoryStream(this.Content);
+                using (BinaryReader r = new BinaryReader(s)) {
+                    while(i < this.Content.Length) {
+                        ColiObj newObj = new ColiObj();
+                        byte[] objTypeBytes = r.ReadBytes(4);
+                        newObj.ObjType = BitConverter.ToUInt32(objTypeBytes);
+
+                        byte[] nextWord = r.ReadBytes(4);
+                        byte[] nextNextWord = r.ReadBytes(4);
+                        try {
+                            BitConverter.ToSingle(nextNextWord);
+                        } catch {
+                            
+                        }
+
+                    }
                 }
             }
+
+            public List<ColiObj> ColiObjs { get; set; }
             public long HeaderOffset { get; set; }
             public long SizeOffset { get; set; }
             public long ContentOffset { get; set; }
             public uint Size { get; set; }
             public byte[] Content { get; set; }
-            public List<PointF> GetContentAsPoints()
-            {
-                List<PointF> ret = null;
-                if (Content == null)
-                {
-                    return ret;
-                }
-                ret = new List<PointF>();
-                for (int i = 0; i < Content.Length; i += 8)
-                {
-
-                    PointF p = new PointF();
-                    p.X = BitConverter.ToSingle(Content, i);
-                    p.Y = BitConverter.ToSingle(Content, i+4);
-                    ret.Add(p);
-                }
-                return ret;
-            }
         }
         long HeaderOffset { get; set; }
         long SizeOffset { get; set; }
@@ -108,7 +111,7 @@ namespace mapinforeader
                 coliInfo.ContentOffset = 0;
                 coliInfo.Content = null;
             }
-            var floatList = coliInfo.GetContentAsPoints();
+            // var floatList = coliInfo.GetContentAsPoints();
 
             if (this.Colis == null)
             {
