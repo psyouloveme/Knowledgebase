@@ -415,10 +415,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1871850465}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e6b7716ec3ace24eba36fbf2de5d975, type: 3}
+  m_Script: {fileID: 11500000, guid: e79b30fb443b3964e9388d81cb8b5dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asset: {fileID: 4900000, guid: 2d7dde17e1b161c49bc8160962acfec1, type: 3}
+  asset: {fileID: 4900000, guid: 0554c1b085cce1c4b99151c34ec93389, type: 3}
   prefab: {fileID: 864013628}
 --- !u!4 &1871850467
 Transform:

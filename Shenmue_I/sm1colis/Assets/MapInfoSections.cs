@@ -30,7 +30,7 @@ public class MapInfoSections {
     public readonly string FLDD = "FLDD";
     // public readonly string PROP = "PROP";
 
-    public readonly string DOOR = "DOOR";
+    // public readonly string DOOR = "DOOR";
     
     // https://wulinshu.com/wiki/index.php/SCEX
     public readonly string SCEX = "SCEX";

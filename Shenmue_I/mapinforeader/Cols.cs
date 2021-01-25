@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
 using mapinforeader.Utils;
+using mapinforeader;
 
 namespace mapinforeader
 {
@@ -23,42 +24,54 @@ namespace mapinforeader
 
         public class ColiInfo
         {
-            public class ColiObj {
-                public uint ObjType { get; set; }
-                public uint? ObjSubTypeOrSomething { get; set; }
-                public uint ObjCount { get; set; }
-                public List<float> ObjData { get ;set; }
-            }
-
             public void ReadColiObjs() {
                 this.ColiObjs = new List<ColiObj>();
                 MemoryStream s = new MemoryStream(this.Content);
                 using (BinaryReader r = new BinaryReader(s)) {
                     while(r.BaseStream.Position < this.Content.Length) {
-                        ColiObj newObj = new ColiObj();
-                        newObj.ObjData = new List<float>();
-                        
-                        byte[] objTypeBytes = r.ReadBytes(4);
-                        newObj.ObjType = BitConverter.ToUInt32(objTypeBytes);
-
-                        byte[] nextWord = r.ReadBytes(4), 
-                            nextNextWord = r.ReadBytes(4), 
+                        ColiObj coli;
+                        byte[] nextWord = new byte[4], 
+                            nextNextWord = new byte[4], 
                             checkArray = new byte[3],
-                            buffer = new byte[4];
+                            buffer = new byte[4],
+                            coliTypeBytes = new byte[4];
+                        uint coliType, coliCount;
+                        uint? colisubtype;
+
+                        // first 4 bytes are type?, usually 00
+                        coliTypeBytes = r.ReadBytes(4);
+                        // convert type to int since that's always present
+                        coliType = BitConverter.ToUInt32(coliTypeBytes);
+                        // next 4 are either the subtype? or count?
+                        nextWord = r.ReadBytes(4);
+                        // this will either be the first content byte or
+                        // the count of (at least for 00 02 header types)
+                        nextNextWord = r.ReadBytes(4); 
+                        
                         Array.Copy(nextNextWord, 1, checkArray, 0, 3);
+
+                        // if the last 3 bytes of the number are all 00, this is a subtype? indicator
                         if (Array.TrueForAll(checkArray, p => p == 0)) {
-                            newObj.ObjSubTypeOrSomething = BitConverter.ToUInt32(nextWord);
-                            newObj.ObjCount = BitConverter.ToUInt32(nextNextWord);
+                            colisubtype = BitConverter.ToUInt32(nextWord);
+                            coliCount = BitConverter.ToUInt32(nextNextWord);
+                            if (coliType == 0 && colisubtype.HasValue && colisubtype.Value == 0x02){
+                                coli = new ColiTypeZeroTwo(coliCount);
+                            } else {
+                                coli = new ColiObj(coliType, colisubtype, coliCount);
+                            }
+                        // otherwise this is the first content byte
                         } else {
-                            newObj.ObjCount = BitConverter.ToUInt32(nextWord);
-                            newObj.ObjData.Add(BitConverter.ToSingle(nextNextWord));
+                            coliCount = BitConverter.ToUInt32(nextWord);
+                            coli = new ColiObj(coliType, null, coliCount);
+                            coli.ObjData.Add(BitConverter.ToSingle(nextNextWord));
                         }
+                        // read the remaining content until we hit FFFFFFFF
                         buffer = r.ReadBytes(4);
                         while (!Array.TrueForAll(buffer, b => b == 0xFF)) {
-                            newObj.ObjData.Add(BitConverter.ToSingle(buffer));
+                            coli.ObjData.Add(BitConverter.ToSingle(buffer));
                             buffer = r.ReadBytes(4);
                         }
-                        this.ColiObjs.Add(newObj);
+                        this.ColiObjs.Add(coli);
                     }
                 }
             }
