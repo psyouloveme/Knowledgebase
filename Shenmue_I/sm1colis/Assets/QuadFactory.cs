@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace coliplot {
     public static class QuadFactory {
-        public static void MakeMesh(Vector3 p1, Vector3 p2, GameObject parent, string basename)
+        public static GameObject MakeMesh(Vector3 p1, Vector3 p2, GameObject parent, string basename, Color color)
         {
             Vector3[] vertices = new Vector3[4]
             {
@@ -46,6 +46,10 @@ namespace coliplot {
             mesh.uv = uv;
             meshFilter.mesh = mesh;
             g.name = basename;
+            if (color != null) {
+                g.GetComponent<Renderer>().material.color = color;
+            }
+            
             if (parent != null)
             {
                 g.transform.SetParent(parent.transform);
@@ -64,10 +68,14 @@ namespace coliplot {
             meshr.uv = uv;
             meshFilterr.mesh = meshr;
             r.name = basename + " Back";
+            if (color != null) {
+                r.GetComponent<Renderer>().material.color = color;
+            }
             if (g != null)
             {
                 r.transform.SetParent(g.transform);
             }
+            return g;
         }
     }
 }

@@ -36,23 +36,37 @@ public class PlotColiDataNew : MonoBehaviour {
           // Debug.Log("Processing obj" + j.ColiType.ToString("X2"));
           if (j.ColiType == 0) {
             switch (j.ColiSubType) {
+              case 0x01:{
+                ColiTypeZeroOne c = (ColiTypeZeroOne)j;
+                // Debug.Log("Creating with " + c);
+                Vector3 prev = Vector3.negativeInfinity;
+                foreach (var v in c.Points)
+                {
+                    Vector3 pos = new Vector3(v.X, v.Y, v.Z);
+                    GameObject obj = Instantiate(prefab, pos, rotation, gameObject.transform) as GameObject;
+                    obj.name = "Point " + coliObjId;
+                    if (Validator.ValidateVector3(prev))
+                    {
+                        var g = QuadFactory.MakeMesh(prev, pos, obj, "Quad" + coliObjId, Color.blue);
+                        Debug.DrawLine(prev, pos, Color.red, 60);
+                    }
+                    prev = pos;
+                    coliObjId++;
+                }
+                break;
+              }
               case 0x02: {
                 ColiTypeZeroTwo c = (ColiTypeZeroTwo)j;
                 // Debug.Log("Creating with " + c);
                 Vector3 prev = Vector3.negativeInfinity;
                 foreach (var v in c.Points)
                 {
-                    Debug.Log("Creating: " + v.X + ", " + v.Y + ", " + v.Z);
-                    Validator.ValidateFloat(v.X);
-                    Validator.ValidateFloat(v.Y);
-                    Validator.ValidateFloat(v.Z);
-
                     Vector3 pos = new Vector3(v.X, v.Y, v.Z);
-                    // GameObject obj = Instantiate(prefab, pos, rotation) as GameObject;
-                    // obj.name = "Point " + coliObjId;
+                    GameObject obj = Instantiate(prefab, pos, rotation, gameObject.transform) as GameObject;
+                    obj.name = "Point " + coliObjId;
                     if (Validator.ValidateVector3(prev))
                     {
-                        QuadFactory.MakeMesh(prev, pos, gameObject, "Quad" + coliObjId);
+                        var g = QuadFactory.MakeMesh(prev, pos, obj, "Quad" + coliObjId, Color.red);
                         Debug.DrawLine(prev, pos, Color.red, 60);
                     }
                     prev = pos;
@@ -62,12 +76,11 @@ public class PlotColiDataNew : MonoBehaviour {
               }
               case 0x03: {
                   ColiTypeZeroThree c = (ColiTypeZeroThree)j;
-                  Debug.Log("Creating with " + c);
                   foreach (var v in c.Points)
                   {
-                      Vector3 pos = new Vector3(v.X, v.Y, v.Z);
-                      
-                      GameObject obj = Instantiate(prefab, pos, rotation) as GameObject;
+                      Vector3 pos = new Vector3(v.X, v.Y, v.Z);    
+                      GameObject obj = Instantiate(prefab, pos, rotation, gameObject.transform) as GameObject;
+                      obj.name = "Point " + coliObjId;
                   }
                   break;
                 }
