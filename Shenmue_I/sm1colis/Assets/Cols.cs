@@ -1,10 +1,8 @@
 using System;
-using System.Drawing;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
 using mapinforeader.Utils;
-using mapinforeader;
 
 namespace mapinforeader
 {
@@ -24,14 +22,17 @@ namespace mapinforeader
 
         public class ColiInfo
         {
-            public void ReadColiObjs() {
+            public void ReadColiObjs()
+            {
                 this.ColiObjs = new List<ColiObj>();
                 MemoryStream s = new MemoryStream(this.Content);
-                using (BinaryReader r = new BinaryReader(s)) {
-                    while(r.BaseStream.Position < this.Content.Length) {
+                using (BinaryReader r = new BinaryReader(s))
+                {
+                    while (r.BaseStream.Position < this.Content.Length)
+                    {
                         ColiObj coli;
-                        byte[] nextWord = new byte[4], 
-                            nextNextWord = new byte[4], 
+                        byte[] nextWord = new byte[4],
+                            nextNextWord = new byte[4],
                             checkArray = new byte[3],
                             buffer = new byte[4],
                             coliTypeBytes = new byte[4];
@@ -46,28 +47,61 @@ namespace mapinforeader
                         nextWord = r.ReadBytes(4);
                         // this will either be the first content byte or
                         // the count of (at least for 00 02 header types)
-                        nextNextWord = r.ReadBytes(4); 
-                        
+                        nextNextWord = r.ReadBytes(4);
+
                         Array.Copy(nextNextWord, 1, checkArray, 0, 3);
 
                         // if the last 3 bytes of the number are all 00, this is a subtype? indicator
-                        if (Array.TrueForAll(checkArray, p => p == 0)) {
+                        if (Array.TrueForAll(checkArray, p => p == 0))
+                        {
                             colisubtype = BitConverter.ToUInt32(nextWord, 0);
                             coliCount = BitConverter.ToUInt32(nextNextWord, 0);
-                            if (coliType == 0 && colisubtype.HasValue && colisubtype.Value == 0x02){
-                                coli = new ColiTypeZeroTwo(coliCount);
-                            } else {
+                            if (coliType == 0 && colisubtype.HasValue)
+                            {
+                                switch (colisubtype.Value)
+                                {
+                                    case 0x02:
+                                        coli = new ColiTypeZeroTwo(coliCount);
+                                        break;
+                                    default:
+                                        coli = new ColiObj(coliType, colisubtype, coliCount);
+                                        break;
+                                }
+                            }
+                            else
+                            {
                                 coli = new ColiObj(coliType, colisubtype, coliCount);
                             }
-                        // otherwise this is the first content byte
-                        } else {
-                            coliCount = BitConverter.ToUInt32(nextWord, 0);
-                            coli = new ColiObj(coliType, null, coliCount);
+                            // otherwise this is the first content byte
+                        }
+                        else
+                        {
+                            colisubtype = BitConverter.ToUInt32(nextWord, 0);
+                            if (coliType == 0)
+                            {
+                                switch (colisubtype.Value)
+                                {
+                                    case 0x03:
+                                        coli = new ColiTypeZeroThree();
+                                        break;
+                                    case 0x01:
+                                        coli = new ColiTypeZeroOne();
+                                        break;
+                                    default:
+                                        coli = new ColiObj(coliType, colisubtype, null);
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                coli = new ColiObj(coliType, colisubtype);
+                            }
                             coli.ObjData.Add(BitConverter.ToSingle(nextNextWord, 0));
                         }
                         // read the remaining content until we hit FFFFFFFF
                         buffer = r.ReadBytes(4);
-                        while (!Array.TrueForAll(buffer, b => b == 0xFF)) {
+                        while (!Array.TrueForAll(buffer, b => b == 0xFF))
+                        {
                             coli.ObjData.Add(BitConverter.ToSingle(buffer, 0));
                             buffer = r.ReadBytes(4);
                         }
@@ -136,7 +170,7 @@ namespace mapinforeader
                 coliInfo.Content = null;
             }
             // var floatList = coliInfo.GetContentAsPoints();
-            
+
             if (this.Colis == null)
             {
                 this.Colis = new List<ColiInfo>();

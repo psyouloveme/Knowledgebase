@@ -1,10 +1,8 @@
 using System;
-using System.Drawing;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
 using mapinforeader.Utils;
-using mapinforeader;
 
 namespace mapinforeader
 {
@@ -41,7 +39,7 @@ namespace mapinforeader
                         // first 4 bytes are type?, usually 00
                         coliTypeBytes = r.ReadBytes(4);
                         // convert type to int since that's always present
-                        coliType = BitConverter.ToUInt32(coliTypeBytes);
+                        coliType = BitConverter.ToUInt32(coliTypeBytes, 0);
                         // next 4 are either the subtype? or count?
                         nextWord = r.ReadBytes(4);
                         // this will either be the first content byte or
@@ -52,23 +50,46 @@ namespace mapinforeader
 
                         // if the last 3 bytes of the number are all 00, this is a subtype? indicator
                         if (Array.TrueForAll(checkArray, p => p == 0)) {
-                            colisubtype = BitConverter.ToUInt32(nextWord);
-                            coliCount = BitConverter.ToUInt32(nextNextWord);
-                            if (coliType == 0 && colisubtype.HasValue && colisubtype.Value == 0x02){
-                                coli = new ColiTypeZeroTwo(coliCount);
+                            colisubtype = BitConverter.ToUInt32(nextWord, 0);
+                            coliCount = BitConverter.ToUInt32(nextNextWord, 0);
+                            if (coliType == 0 && colisubtype.HasValue) {
+                                switch (colisubtype.Value){
+                                    case 0x02:
+                                        coli = new ColiTypeZeroTwo(coliCount);
+                                        break;
+                                    default:
+                                        coli = new ColiObj(coliType, colisubtype, coliCount);
+                                        break;
+                                } 
                             } else {
                                 coli = new ColiObj(coliType, colisubtype, coliCount);
                             }
                         // otherwise this is the first content byte
                         } else {
-                            coliCount = BitConverter.ToUInt32(nextWord);
-                            coli = new ColiObj(coliType, null, coliCount);
-                            coli.ObjData.Add(BitConverter.ToSingle(nextNextWord));
+                            colisubtype = BitConverter.ToUInt32(nextWord, 0);
+                            if (coliType == 0)
+                            {
+                                switch (colisubtype.Value)
+                                {
+                                    case 0x03:
+                                        coli = new ColiTypeZeroThree();
+                                        break;
+                                    case 0x01:
+                                        coli = new ColiTypeZeroOne();
+                                        break;
+                                    default:
+                                        coli = new ColiObj(coliType, colisubtype, null);
+                                        break;
+                                }
+                            } else {
+                                coli = new ColiObj(coliType, colisubtype);
+                            }
+                            coli.ObjData.Add(BitConverter.ToSingle(nextNextWord, 0));
                         }
                         // read the remaining content until we hit FFFFFFFF
                         buffer = r.ReadBytes(4);
                         while (!Array.TrueForAll(buffer, b => b == 0xFF)) {
-                            coli.ObjData.Add(BitConverter.ToSingle(buffer));
+                            coli.ObjData.Add(BitConverter.ToSingle(buffer, 0));
                             buffer = r.ReadBytes(4);
                         }
                         this.ColiObjs.Add(coli);
