@@ -45,6 +45,8 @@ public class PlotColiDataNew : MonoBehaviour {
                     Vector3 pos = new Vector3(v.X, v.Y, v.Z);
                     GameObject obj = Instantiate(prefab, pos, rotation, gameObject.transform) as GameObject;
                     obj.name = "Point " + coliObjId;
+                    obj.GetComponent<Renderer>().material.color = Color.blue;
+
                     if (Validator.ValidateVector3(prev))
                     {
                         var g = QuadFactory.MakeMesh(prev, pos, obj, "Quad" + coliObjId, Color.blue);
@@ -64,6 +66,7 @@ public class PlotColiDataNew : MonoBehaviour {
                     Vector3 pos = new Vector3(v.X, v.Y, v.Z);
                     GameObject obj = Instantiate(prefab, pos, rotation, gameObject.transform) as GameObject;
                     obj.name = "Point " + coliObjId;
+                    obj.GetComponent<Renderer>().material.color = Color.red;
                     if (Validator.ValidateVector3(prev))
                     {
                         var g = QuadFactory.MakeMesh(prev, pos, obj, "Quad" + coliObjId, Color.red);
@@ -81,6 +84,7 @@ public class PlotColiDataNew : MonoBehaviour {
                       Vector3 pos = new Vector3(v.X, v.Y, v.Z);    
                       GameObject obj = Instantiate(prefab, pos, rotation, gameObject.transform) as GameObject;
                       obj.name = "Point " + coliObjId;
+                      obj.GetComponent<Renderer>().material.color = Color.green;
                   }
                   break;
                 }
