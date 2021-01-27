@@ -86,6 +86,35 @@ namespace mapinforeader {
             }
         }
     }
+
+    public class ColiTypeNineOne : ColiObj {
+        public ColiTypeNineOne() : base(0, 3) { }
+        public ColiTypeNineOne(uint size) : base(0, 3, size) { }
+        public override List<float> GetObjData()
+        {
+            Console.WriteLine("In 30");
+            return ObjData;
+        }
+
+        public List<Vector3> Points
+        {
+            get
+            {
+                List<Vector3> ret = new List<Vector3>();
+                if (this.ObjData.Count % 3 != 0){
+                    throw new Exception("Coli data was not in expected format.");
+                }
+                for (int i = 0; i < this.ObjData.Count; i++)
+                {
+                    var y = this.ObjData[i];
+                    var x = this.ObjData[++i];
+                    var z = this.ObjData[++i];
+                    ret.Add(new Vector3(x, y, z));
+                }
+                return ret;
+            }
+        }
+    }
     public class ColiTypeZeroOne : Coli2d
     {
         public ColiTypeZeroOne() : base(0, 1) { }
