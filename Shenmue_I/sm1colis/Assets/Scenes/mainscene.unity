@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e79b30fb443b3964e9388d81cb8b5dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asset: {fileID: 4900000, guid: 2d010622c8c78a8408dc7d51048e7e9d, type: 3}
+  asset: {fileID: 4900000, guid: 18175f5d9a0378f48816794fa6f5fa10, type: 3}
   prefab: {fileID: 232086515}
 --- !u!4 &690882279
 Transform:

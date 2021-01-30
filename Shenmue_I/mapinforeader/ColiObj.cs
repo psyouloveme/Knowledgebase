@@ -125,4 +125,15 @@ namespace mapinforeader {
             return ObjData;
         }
     }
+    public class ColiTypeSixFourZeroOne : Coli2d
+    {
+        public ColiTypeSixFourZeroOne() : base(0x64, 1) { }
+        public ColiTypeSixFourZeroOne(uint size) : base(0x64, 1, size) { }
+        public override List<float> GetObjData()
+        {
+            Console.WriteLine("In 64 01");
+            return ObjData;
+        }
+    }
+
 }
