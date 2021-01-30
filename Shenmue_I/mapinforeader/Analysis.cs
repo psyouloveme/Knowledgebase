@@ -80,7 +80,9 @@ namespace mapinforeader.Utils
                 });
                 sw.WriteLine("| Address? | Count |");
                 sw.WriteLine("|----------|-------|");
-                foreach (var kv in zeroThreeCounts) {
+                var kvl = zeroThreeCounts.ToList();
+                kvl.Sort((a, b) => b.Value.CompareTo(a.Value));
+                foreach (var kv in kvl) {
                     sw.WriteLine($"| {kv.Key} | {kv.Value} |");
                 }
             }

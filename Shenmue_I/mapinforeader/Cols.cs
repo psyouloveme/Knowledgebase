@@ -103,6 +103,42 @@ namespace mapinforeader
                                         break;
                                 }
                             }
+                            else if (coliType == 0x07)
+                            {
+                                switch (colisubtype.Value)
+                                {
+                                    case 0x01:
+                                        coli = new ColiType0701();
+                                        break;
+                                    default:
+                                        coli = new ColiObj(coliType, colisubtype, null);
+                                        break;
+                                }
+                            }
+                            else if (coliType == 0x09)
+                            {
+                                switch (colisubtype.Value)
+                                {
+                                    case 0x01:
+                                        coli = new ColiType0901();
+                                        break;
+                                    default:
+                                        coli = new ColiObj(coliType, colisubtype, null);
+                                        break;
+                                }
+                            }
+                            else if (coliType == 0x0A)
+                            {
+                                switch (colisubtype.Value)
+                                {
+                                    case 0x01:
+                                        coli = new ColiType0A01();
+                                        break;
+                                    default:
+                                        coli = new ColiObj(coliType, colisubtype, null);
+                                        break;
+                                }
+                            }
                             else
                             {
                                 coli = new ColiObj(coliType, colisubtype);

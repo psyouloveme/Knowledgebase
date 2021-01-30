@@ -4,117 +4,147 @@ using System.Numerics;
 
 namespace mapinforeader
 {
-    public class ColiObj
+  public class ColiObj
+  {
+    public ColiObj()
     {
-        public ColiObj()
+      ObjData = new List<float>();
+    }
+    public ColiObj(uint ct, uint? cst, uint? cc)
+    {
+      ColiType = ct;
+      ColiSubType = cst;
+      ColiCount = cc;
+      ObjData = new List<float>();
+    }
+    public ColiObj(uint ct, uint? cst)
+    {
+      ColiType = ct;
+      ColiSubType = cst;
+      ColiCount = null;
+      ObjData = new List<float>();
+    }
+    public uint ColiType { get; set; }
+    public uint? ColiSubType { get; set; }
+    public uint? ColiCount { get; set; }
+    public List<float> ObjData { get; set; }
+    public virtual List<float> GetObjData()
+    {
+      return ObjData;
+    }
+  }
+
+  public class Coli2d : ColiObj
+  {
+    public Coli2d(uint ct, uint? cst, uint? cc) : base(ct, cst, cc) { }
+    public Coli2d(uint ct, uint? cst) : base(ct, cst) { }
+    public List<Vector3> Points
+    {
+      get
+      {
+        List<Vector3> ret = new List<Vector3>();
+        if (ObjData.Count % 2 != 0)
         {
-            ObjData = new List<float>();
+          throw new Exception("Coli data was not in expected format.");
         }
-        public ColiObj(uint ct, uint? cst, uint? cc)
+        for (int x = 0; x < this.ObjData.Count; x++)
         {
-            ColiType = ct;
-            ColiSubType = cst;
-            ColiCount = cc;
-            ObjData = new List<float>();
+          ret.Add(new Vector3(this.ObjData[x], 0, this.ObjData[++x]));
         }
-        public ColiObj(uint ct, uint? cst)
-        {
-            ColiType = ct;
-            ColiSubType = cst;
-            ColiCount = null;
-            ObjData = new List<float>();
-        }
-        public uint ColiType { get; set; }
-        public uint? ColiSubType { get; set; }
-        public uint? ColiCount { get; set; }
-        public List<float> ObjData { get; set; }
-        public virtual List<float> GetObjData()
-        {
-            return ObjData;
-        }
+        return ret;
+      }
+    }
+  }
+
+  public class ColiTypeZeroTwo : Coli2d
+  {
+    public ColiTypeZeroTwo() : base(0, 2) { }
+    public ColiTypeZeroTwo(uint size) : base(0, 2, size) { }
+    public override List<float> GetObjData()
+    {
+      Console.WriteLine("In 20");
+      return ObjData;
+    }
+  }
+  public class ColiTypeZeroThree : ColiObj
+  {
+    public ColiTypeZeroThree() : base(0, 3) { }
+    public ColiTypeZeroThree(uint size) : base(0, 3, size) { }
+    public override List<float> GetObjData()
+    {
+      Console.WriteLine("In 30");
+      return ObjData;
     }
 
-    public class Coli2d : ColiObj
+    public List<Vector3> Points
     {
-        public Coli2d(uint ct, uint? cst, uint? cc) : base(ct, cst, cc) { }
-        public Coli2d(uint ct, uint? cst) : base(ct, cst) { }
-        public List<Vector3> Points
+      get
+      {
+        List<Vector3> ret = new List<Vector3>();
+        if (this.ObjData.Count % 3 != 0)
         {
-            get
-            {
-                List<Vector3> ret = new List<Vector3>();
-                if (ObjData.Count % 2 != 0)
-                {
-                    throw new Exception("Coli data was not in expected format.");
-                }
-                for (int x = 0; x < this.ObjData.Count; x++)
-                {
-                    ret.Add(new Vector3(this.ObjData[x], 0, this.ObjData[++x]));
-                }
-                return ret;
-            }
+          throw new Exception("Coli data was not in expected format.");
         }
+        for (int i = 0; i < this.ObjData.Count; i++)
+        {
+          var y = this.ObjData[i];
+          var x = this.ObjData[++i];
+          var z = this.ObjData[++i];
+          ret.Add(new Vector3(x, y, z));
+        }
+        return ret;
+      }
     }
+  }
 
-    public class ColiTypeZeroTwo : Coli2d
+  public class ColiTypeZeroOne : Coli2d
+  {
+    public ColiTypeZeroOne() : base(0, 1) { }
+    public ColiTypeZeroOne(uint size) : base(0, 1, size) { }
+    public override List<float> GetObjData()
     {
-        public ColiTypeZeroTwo() : base(0, 2) { }
-        public ColiTypeZeroTwo(uint size) : base(0, 2, size) { }
-        public override List<float> GetObjData()
-        {
-            Console.WriteLine("In 20");
-            return ObjData;
-        }
+      Console.WriteLine("In 10");
+      return ObjData;
     }
-    public class ColiTypeZeroThree : ColiObj
+  }
+  public class ColiTypeSixFourZeroOne : Coli2d
+  {
+    public ColiTypeSixFourZeroOne() : base(0x64, 1) { }
+    public ColiTypeSixFourZeroOne(uint size) : base(0x64, 1, size) { }
+    public override List<float> GetObjData()
     {
-        public ColiTypeZeroThree() : base(0, 3) { }
-        public ColiTypeZeroThree(uint size) : base(0, 3, size) { }
-        public override List<float> GetObjData()
-        {
-            Console.WriteLine("In 30");
-            return ObjData;
-        }
-
-        public List<Vector3> Points
-        {
-            get
-            {
-                List<Vector3> ret = new List<Vector3>();
-                if (this.ObjData.Count % 3 != 0)
-                {
-                    throw new Exception("Coli data was not in expected format.");
-                }
-                for (int i = 0; i < this.ObjData.Count; i++)
-                {
-                    var y = this.ObjData[i];
-                    var x = this.ObjData[++i];
-                    var z = this.ObjData[++i];
-                    ret.Add(new Vector3(x, y, z));
-                }
-                return ret;
-            }
-        }
+      Console.WriteLine("In 64 01");
+      return ObjData;
     }
-    public class ColiTypeZeroOne : Coli2d
+  }
+  public class ColiType0701 : Coli2d
+  {
+    public ColiType0701() : base(0x07, 1) { }
+    public ColiType0701(uint size) : base(0x07, 1, size) { }
+    public override List<float> GetObjData()
     {
-        public ColiTypeZeroOne() : base(0, 1) { }
-        public ColiTypeZeroOne(uint size) : base(0, 1, size) { }
-        public override List<float> GetObjData()
-        {
-            Console.WriteLine("In 10");
-            return ObjData;
-        }
+      Console.WriteLine("In ColiType0701");
+      return ObjData;
     }
-
-    public class ColiTypeSixFourZeroOne : Coli2d
+  }
+  public class ColiType0901 : Coli2d
+  {
+    public ColiType0901() : base(0x09, 1) { }
+    public ColiType0901(uint size) : base(0x09, 1, size) { }
+    public override List<float> GetObjData()
     {
-        public ColiTypeSixFourZeroOne() : base(0x64, 1) { }
-        public ColiTypeSixFourZeroOne(uint size) : base(0x64, 1, size) { }
-        public override List<float> GetObjData()
-        {
-            Console.WriteLine("In 64 01");
-            return ObjData;
-        }
+      Console.WriteLine("In ColiType0901");
+      return ObjData;
     }
+  }
+  public class ColiType0A01 : Coli2d
+  {
+    public ColiType0A01() : base(0x0A, 1) { }
+    public ColiType0A01(uint size) : base(0x0A, 1, size) { }
+    public override List<float> GetObjData()
+    {
+      Console.WriteLine("In ColiType0A01");
+      return ObjData;
+    }
+  }
 }
