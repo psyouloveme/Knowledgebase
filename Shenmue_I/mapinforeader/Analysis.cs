@@ -51,7 +51,40 @@ namespace mapinforeader.Utils
             }
             Console.WriteLine("-----------------------------------");
         }
-
+        public static void DumpFormattedZeroThreeColsToFile(Cols c, string filename)
+        {
+            FileStream l = File.Open(filename, FileMode.Create);
+            using (StreamWriter sw = new StreamWriter(l))
+            {
+                var zeroThreeCounts = new Dictionary<string, int>();
+                c.Colis.ForEach(h =>
+                {
+                    h.ColiObjs.ForEach(j =>
+                    {
+                        if ((j.ColiType == 0x00) && (j.ColiSubType.HasValue && j.ColiSubType.Value == 0x03)) {
+                            var coli = (ColiTypeZeroThree)j;
+                            foreach(var cp in coli.Points) {
+                                byte[] vOut = BitConverter.GetBytes(cp.Y);
+                                string byteString = vOut[0].ToString("X2")
+                                                + vOut[1].ToString("X2")
+                                                + vOut[2].ToString("X2")
+                                                + vOut[3].ToString("X2");
+                                if (zeroThreeCounts.ContainsKey(byteString)){
+                                    zeroThreeCounts[byteString]++;  
+                                } else {
+                                    zeroThreeCounts[byteString] = 1;
+                                }
+                            }    
+                        } 
+                    });
+                });
+                sw.WriteLine("| Address? | Count |");
+                sw.WriteLine("|----------|-------|");
+                foreach (var kv in zeroThreeCounts) {
+                    sw.WriteLine($"| {kv.Key} | {kv.Value} |");
+                }
+            }
+        }
         public static void DumpFormattedColsMetadataToFile(Cols c, string filename) {
             FileStream l = File.Open(filename, FileMode.Create);
             using (StreamWriter sw = new StreamWriter(l))

@@ -25,9 +25,9 @@ namespace mapinforeader
                     c = Cols.ReadCols(r);
                 }
             }
-            Analysis.DumpFormattedColsToFile(c, "Colis_With_0003s.txt");
-            Console.WriteLine("Max 00 02 coord is " + Analysis.FindMaxZeroTwoCoord(c));
-            Console.WriteLine("Min 00 02 coord is " + Analysis.FindMinZeroTwoCoord(c));
+            Analysis.DumpFormattedZeroThreeColsToFile(c, "0003ColLocs.md");
+            // Console.WriteLine("Max 00 02 coord is " + Analysis.FindMaxZeroTwoCoord(c));
+            // Console.WriteLine("Min 00 02 coord is " + Analysis.FindMinZeroTwoCoord(c));
         }
     }
 }
