@@ -72,76 +72,74 @@ namespace mapinforeader
                             {
                                 coli = new ColiObj(coliType, colisubtype, coliCount);
                             }
-                            // otherwise this is the first content byte
                         }
+                        // otherwise this is the first content byte
                         else
                         {
                             colisubtype = BitConverter.ToUInt32(nextWord, 0);
-                            if (coliType == 0)
-                            {
-                                switch (colisubtype.Value)
-                                {
-                                    case 0x03:
-                                        coli = new ColiTypeZeroThree();
-                                        break;
-                                    case 0x01:
-                                        coli = new ColiTypeZeroOne();
-                                        break;
-                                    default:
-                                        coli = new ColiObj(coliType, colisubtype, null);
-                                        break;
+                            switch (coliType) {
+                                case 0x00: {
+                                    switch (colisubtype.Value) {
+                                        case 0x03:
+                                            coli = new ColiTypeZeroThree();
+                                            break;
+                                        case 0x01:
+                                            coli = new ColiTypeZeroOne();
+                                            break;
+                                        default:
+                                            coli = new ColiObj(coliType, colisubtype, null);
+                                            break;
+                                    }
+                                    break;
                                 }
-                            }
-                            else if(coliType == 0x64) {
-                                switch (colisubtype.Value)
-                                {
-                                    case 0x01:
-                                        coli = new ColiTypeSixFourZeroOne();
-                                        break;
-                                    default:
-                                        coli = new ColiObj(coliType, colisubtype, null);
-                                        break;
+                                case 0x64: {
+                                    switch (colisubtype.Value) {
+                                        case 0x01:
+                                            coli = new ColiTypeSixFourZeroOne();
+                                            break;
+                                        default:
+                                            coli = new ColiObj(coliType, colisubtype, null);
+                                            break;
+                                    }
+                                    break;
                                 }
-                            }
-                            else if (coliType == 0x07)
-                            {
-                                switch (colisubtype.Value)
-                                {
-                                    case 0x01:
-                                        coli = new ColiType0701();
-                                        break;
-                                    default:
-                                        coli = new ColiObj(coliType, colisubtype, null);
-                                        break;
+                                case 0x07: {
+                                    switch (colisubtype.Value) {
+                                        case 0x01:
+                                            coli = new ColiType0701();
+                                            break;
+                                        default:
+                                            coli = new ColiObj(coliType, colisubtype, null);
+                                            break;
+                                    }
+                                    break;
                                 }
-                            }
-                            else if (coliType == 0x09)
-                            {
-                                switch (colisubtype.Value)
-                                {
-                                    case 0x01:
-                                        coli = new ColiType0901();
-                                        break;
-                                    default:
-                                        coli = new ColiObj(coliType, colisubtype, null);
-                                        break;
+                                case 0x09: {
+                                    switch (colisubtype.Value) {
+                                        case 0x01:
+                                            coli = new ColiType0901();
+                                            break;
+                                        default:
+                                            coli = new ColiObj(coliType, colisubtype, null);
+                                            break;
+                                    }
+                                    break;
                                 }
-                            }
-                            else if (coliType == 0x0A)
-                            {
-                                switch (colisubtype.Value)
-                                {
-                                    case 0x01:
-                                        coli = new ColiType0A01();
-                                        break;
-                                    default:
-                                        coli = new ColiObj(coliType, colisubtype, null);
-                                        break;
+                                case 0x0A: {
+                                    switch (colisubtype.Value) {
+                                        case 0x01:
+                                            coli = new ColiType0A01();
+                                            break;
+                                        default:
+                                            coli = new ColiObj(coliType, colisubtype, null);
+                                            break;
+                                    }
+                                    break;
                                 }
-                            }
-                            else
-                            {
-                                coli = new ColiObj(coliType, colisubtype);
+                                default: {
+                                    coli = new ColiObj(coliType, colisubtype);
+                                    break;
+                                }
                             }
                             coli.ObjData.Add(BitConverter.ToSingle(nextNextWord, 0));
                         }
