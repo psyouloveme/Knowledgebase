@@ -87,6 +87,9 @@ namespace mapinforeader
                   case 0x01:
                     coli = new ColiTypeZeroOne();
                     break;
+                  case 0x05:
+                    coli = new ColiType0005();
+                    break;
                   default:
                     coli = new ColiObj(coliType, colisubtype, null);
                     break;
@@ -116,12 +119,26 @@ namespace mapinforeader
                     break;
                 }
               }
+              else if (coliType == 0x08) {
+                switch (colisubtype.Value)
+                {
+                    case 0x01:
+                      coli = new ColiType0801();
+                      break;
+                    default:
+                      coli = new ColiObj();
+                      break;
+                }
+              }
               else if (coliType == 0x09)
               {
                 switch (colisubtype.Value)
                 {
                   case 0x01:
                     coli = new ColiType0901();
+                    break;
+                  case 0x05:
+                    coli = new ColiType0905();
                     break;
                   default:
                     coli = new ColiObj(coliType, colisubtype, null);

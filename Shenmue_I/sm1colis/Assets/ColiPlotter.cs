@@ -18,6 +18,11 @@ namespace coliplot {
               PlotAsQuads(coli.Points, Color.red, "00 02", parent);
               break;
             }
+            case 0x05: {
+                var coli = (ColiType0005)c;
+                PlotAsPoints(coli.Points, Color.yellow, "00 05", parent);
+                break;
+            }
             case 0x03: {
               var coli = (ColiTypeZeroThree)c;
               PlotAsPoints(coli.Points, Color.green, "00 03", parent);
@@ -38,6 +43,17 @@ namespace coliplot {
               break;
           }
           break;
+        case 0x08:
+          switch (c.ColiSubType) {
+            case 0x01: {
+              var coli = (ColiType0801)c;
+              PlotAsQuads(coli.Points, Color.green, "08 01", parent);
+              break;
+            }
+            default:
+              break;
+          }
+          break;
         case 0x09:
           switch (c.ColiSubType)
           {
@@ -45,6 +61,12 @@ namespace coliplot {
               {
                 var coli = (ColiType0901)c;
                 PlotAsQuads(coli.Points, Color.cyan, "09 01", parent);
+                break;
+              }
+            case 0x05:
+              {
+                var coli = (ColiType0905)c;
+                PlotAsPoints(coli.Points, Color.red, "09 05", parent);
                 break;
               }
             default:

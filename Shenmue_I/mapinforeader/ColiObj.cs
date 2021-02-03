@@ -86,6 +86,56 @@ namespace mapinforeader {
             }
         }
     }
+    public class ColiType0005 : ColiObj
+    {
+        public ColiType0005() : base(0, 5) { }
+        public ColiType0005(uint size) : base(0, 5, size) { }
+        public override List<float> GetObjData()
+        {
+            Console.WriteLine("In 00 05");
+            return ObjData;
+        }
+
+        public List<Vector3> Points
+        {
+            get
+            {
+                // all of the 00 05s are 6 words long
+                // discard everything after the first 2
+                // because idk what it represents
+                List<Vector3> ret = new List<Vector3>();
+                var x = this.ObjData[0];
+                var z = this.ObjData[1];
+                ret.Add(new Vector3(x, 0, z));
+                return ret;
+            }
+        }
+    }
+    public class ColiType0905 : ColiObj
+    {
+        public ColiType0905() : base(9, 5) { }
+        public ColiType0905(uint size) : base(9, 5, size) { }
+        public override List<float> GetObjData()
+        {
+            Console.WriteLine("In 09 05");
+            return ObjData;
+        }
+
+        public List<Vector3> Points
+        {
+            get
+            {
+                // all of the 09 05s are 6 words long
+                // discard everything after the first 2
+                // because idk what it represents
+                List<Vector3> ret = new List<Vector3>();
+                var x = this.ObjData[0];
+                var z = this.ObjData[1];
+                ret.Add(new Vector3(x, 0, z));
+                return ret;
+            }
+        }
+    }
 
     public class ColiTypeZeroOne : Coli2d
     {
@@ -134,6 +184,17 @@ namespace mapinforeader {
         public override List<float> GetObjData()
         {
             Console.WriteLine("In ColiType0A01");
+            return ObjData;
+        }
+    }
+
+    public class ColiType0801 : Coli2d
+    {
+        public ColiType0801() : base(0x08, 1) { }
+        public ColiType0801(uint size) : base(0x08, 1, size) { }
+        public override List<float> GetObjData()
+        {
+            Console.WriteLine("In ColiType0801");
             return ObjData;
         }
     }
