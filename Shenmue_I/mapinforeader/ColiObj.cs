@@ -60,6 +60,17 @@
             }
         }
 
+        public class ColiTypeC802 : Coli2d
+        {
+            public ColiTypeC802() : base(0xC8, 2) { }
+            public ColiTypeC802(uint size) : base(0xC8, 2, size) { }
+            public override List<float> GetObjData()
+            {
+                Console.WriteLine("In ColiTypeC802");
+                return ObjData;
+            }
+        }
+
         public class ColiType0702 : Coli2d
         {
             public ColiType0702() : base(7, 2) { }

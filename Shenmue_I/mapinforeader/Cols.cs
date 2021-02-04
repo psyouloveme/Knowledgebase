@@ -92,6 +92,18 @@ namespace mapinforeader
                                         break;
                                 }
                             }
+                            else if (coliType == 0xC8 && colisubtype.HasValue)
+                            {
+                                switch (colisubtype.Value)
+                                {
+                                    case 0x02:
+                                        coli = new ColiTypeC802(coliCount);
+                                        break;
+                                    default:
+                                        coli = new ColiObj(coliType, colisubtype, coliCount);
+                                        break;
+                                }
+                            }
                             else
                             {
                                 coli = new ColiObj(coliType, colisubtype, coliCount);

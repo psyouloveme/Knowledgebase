@@ -92,6 +92,19 @@ namespace mapinforeader
                     break;
                 }
               }
+
+              else if (coliType == 0xC8 && colisubtype.HasValue)
+              {
+                switch (colisubtype.Value)
+                {
+                  case 0x02:
+                    coli = new ColiTypeC802(coliCount);
+                    break;
+                  default:
+                    coli = new ColiObj(coliType, colisubtype, coliCount);
+                    break;
+                }
+              }
               else
               {
                 coli = new ColiObj(coliType, colisubtype, coliCount);
@@ -131,18 +144,18 @@ namespace mapinforeader
                     break;
                 }
               }
-              else if (coliType == 0x6E)
-              {
-                switch (colisubtype.Value)
-                {
-                  case 0x01:
-                    coli = new ColiType6E01();
-                    break;
-                  default:
-                    coli = new ColiObj(coliType, colisubtype, null);
-                    break;
-                }
-              }
+              // else if (coliType == 0x6E)
+              // {
+              //   switch (colisubtype.Value)
+              //   {
+              //     case 0x01:
+              //       coli = new ColiType6E01();
+              //       break;
+              //     default:
+              //       coli = new ColiObj(coliType, colisubtype, null);
+              //       break;
+              //   }
+              // }
               else if (coliType == 0x07)
               {
                 switch (colisubtype.Value)
@@ -193,6 +206,30 @@ namespace mapinforeader
                     break;
                   default:
                     coli = new ColiObj(coliType, colisubtype, null);
+                    break;
+                }
+              }
+              else if (coliType >= 0x65 && coliType <= 0x6D)
+              {
+                switch (colisubtype.Value)
+                {
+                  case 0x01:
+                    coli = new Coli2d(coliType, 0x01);
+                    break;
+                  default:
+                    coli = new ColiObj(coliType, colisubtype);
+                    break;
+                }
+              }
+              else if (coliType >= 0x6E && coliType <= 0x76)
+              {
+                switch (colisubtype.Value)
+                {
+                  case 0x01:
+                    coli = new Coli2d(coliType, 0x01);
+                    break;
+                  default:
+                    coli = new ColiObj(coliType, colisubtype);
                     break;
                 }
               }

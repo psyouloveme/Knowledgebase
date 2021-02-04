@@ -27,22 +27,22 @@
 | 09 | 02 | 06 | 12 | 4 | ✔️ | These seem like barriers around objects. Don't have all the objects plotting yet but it certainly looks like it in Dobuita |
 | 0A | -- | 01 | 4 | 18 | ✔️ | In Sakuragaoka there are stairs between pairs of these, same with Dobuita. These are stairs beginning and ends. |
 | 64 | -- | 01 | 4 | 57 | ✔️ | These appear to be collision on doors. This includes doors that Ryo can't interact with (but NPCs can). |
-| 65 | -- | 01 | 4 | 2 |  |
-| 66 | -- | 01 | 4 | 2 |  |
-| 67 | -- | 01 | 4 | 2 |  |
-| 68 | -- | 01 | 4 | 2 |  |
-| 69 | -- | 01 | 4 | 2 |  |
-| 6A | -- | 01 | 4 | 2 |  |
-| 6B | -- | 01 | 4 | 2 |  |
-| 6C | -- | 01 | 4 | 2 |  |
-| 6D | -- | 01 | 4 | 2 |  |
-| 6E | -- | 01 | 4 | 1 | ✔️ | This is a weird random piece somewhere. I expect most of these will be. |
-| 6F | -- | 01 | 4 | 1 |  |
-| 70 | -- | 01 | 4 | 1 |  |
-| 71 | -- | 01 | 4 | 1 |  |
-| 72 | -- | 01 | 4 | 1 |  |
-| 73 | -- | 01 | 4 | 1 |  |
-| 74 | -- | 01 | 4 | 1 |  |
-| 75 | -- | 01 | 4 | 1 |  |
-| 76 | -- | 01 | 4 | 1 |  |
-| C8 | 02 | 04 | 8 | 1 |  |
+| 65 | -- | 01 | 4 | 2 | ✔️ | These are all the sliding doors of You Arcade in Dobuita | 
+| 66 | -- | 01 | 4 | 2 | ✔️ | These are all the sliding doors of You Arcade in Dobuita | 
+| 67 | -- | 01 | 4 | 2 | ✔️ | These are all the sliding doors of You Arcade in Dobuita | 
+| 68 | -- | 01 | 4 | 2 | ✔️ | These are all the sliding doors of You Arcade in Dobuita | 
+| 69 | -- | 01 | 4 | 2 | ✔️ | These are all the sliding doors of You Arcade in Dobuita | 
+| 6A | -- | 01 | 4 | 2 | ✔️ | These are all the sliding doors of You Arcade in Dobuita | 
+| 6B | -- | 01 | 4 | 2 | ✔️ | These are all the sliding doors of You Arcade in Dobuita | 
+| 6C | -- | 01 | 4 | 2 | ✔️ | These are all the sliding doors of You Arcade in Dobuita | 
+| 6D | -- | 01 | 4 | 2 | ✔️ | These are all the sliding doors of You Arcade in Dobuita | 
+| 6E | -- | 01 | 4 | 1 | ✔️ | This is another weird piece near the travel agency, maybe tomato convenience store. |
+| 6F | -- | 01 | 4 | 1 | ✔️ | This is another weird piece near the travel agency, maybe tomato convenience store. |
+| 70 | -- | 01 | 4 | 1 | ✔️ | This is another weird piece near the travel agency, maybe tomato convenience store. |
+| 71 | -- | 01 | 4 | 1 | ✔️ | This is another weird piece near the travel agency, maybe tomato convenience store. |
+| 72 | -- | 01 | 4 | 1 | ✔️ | This is another weird piece near the travel agency, maybe tomato convenience store. |
+| 73 | -- | 01 | 4 | 1 | ✔️ | This is another weird piece near the travel agency, maybe tomato convenience store. |
+| 74 | -- | 01 | 4 | 1 | ✔️ | This is another weird piece near the travel agency, maybe tomato convenience store. |
+| 75 | -- | 01 | 4 | 1 | ✔️ | This is another weird piece near the travel agency, maybe tomato convenience store. |
+| 76 | -- | 01 | 4 | 1 | ✔️ | This is another weird piece near the travel agency, maybe tomato convenience store. |
+| C8 | 02 | 04 | 8 | 1 | ✔️ | This might be the collision around tom's hot dog cart | 

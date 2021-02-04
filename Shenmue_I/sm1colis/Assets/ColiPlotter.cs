@@ -115,13 +115,68 @@ namespace coliplot {
               break;
           }
           break;
-        case 0x6E:
+        case 0x65:
+        case 0x66:
+        case 0x67:
+        case 0x68:
+        case 0x69:
+        case 0x6A:
+        case 0x6B:
+        case 0x6C:
+        case 0x6D:
           switch (c.ColiSubType)
           {
             case 0x01:
               {
-                var coli = (ColiType6E01)c;
-                PlotAsQuads(coli.Points, Color.yellow, "6E 01", parent);
+                var coli = (Coli2d)c;
+                PlotAsQuads(coli.Points, Color.yellow, $"Misc 1 {coli.ColiType} {coli.ColiSubType.Value}", parent);
+                break;
+              }
+            default:
+              break;
+          }
+          break;
+        // case 0x6E:
+        //   switch (c.ColiSubType)
+        //   {
+        //     case 0x01:
+        //       {
+        //         var coli = (ColiType6E01)c;
+        //         PlotAsQuads(coli.Points, Color.yellow, "6E 01", parent);
+        //         break;
+        //       }
+        //     default:
+        //       break;
+        //   }
+        //   break;
+        case 0x6E:
+        case 0x6F:
+        case 0x70:
+        case 0x71:
+        case 0x72:
+        case 0x73:
+        case 0x74:
+        case 0x75:
+        case 0x76:
+          switch (c.ColiSubType)
+          {
+            case 0x01:
+              {
+                var coli = (Coli2d)c;
+                PlotAsQuads(coli.Points, Color.yellow, $"Misc 2 {coli.ColiType} {coli.ColiSubType.Value}", parent);
+                break;
+              }
+            default:
+              break;
+          }
+          break;
+        case 0xC8:
+          switch (c.ColiSubType)
+          {
+            case 0x02:
+              {
+                var coli = (ColiTypeC802)c;
+                PlotAsQuads(coli.Points, Color.green, "C8 02", parent);
                 break;
               }
             default:
