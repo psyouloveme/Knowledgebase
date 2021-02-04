@@ -19,9 +19,9 @@ namespace coliplot {
               break;
             }
             case 0x05: {
-                var coli = (ColiType0005)c;
-                PlotAsPoints(coli.Points, Color.yellow, "00 05", parent);
-                break;
+              var coli = (ColiType0005)c;
+              PlotAsPoints(coli.Points, Color.yellow, "00 05", parent);
+              break;
             }
             case 0x03: {
               var coli = (ColiTypeZeroThree)c;
@@ -39,6 +39,12 @@ namespace coliplot {
               PlotAsQuads(coli.Points, Color.magenta, "07 01", parent);
               break;
             }
+            case 0x02:
+              {
+                var coli = (ColiType0702)c;
+                PlotAsQuads(coli.Points, Color.magenta, "07 02", parent);
+                break;
+              }
             default:
               break;
           }
@@ -61,6 +67,18 @@ namespace coliplot {
               {
                 var coli = (ColiType0901)c;
                 PlotAsQuads(coli.Points, Color.cyan, "09 01", parent);
+                break;
+              }
+            case 0x02:
+              {
+                var coli = (ColiType0902)c;
+                PlotAsQuads(coli.Points, Color.black, "09 02", parent);
+                break;
+              }
+            case 0x03:
+              {
+                var coli = (ColiType0903)c;
+                PlotAsPoints(coli.Points, Color.red, "09 03", parent);
                 break;
               }
             case 0x05:
@@ -93,6 +111,19 @@ namespace coliplot {
               PlotAsQuads(coli.Points, Color.yellow, "64 01", parent);
               break;
             }
+            default:
+              break;
+          }
+          break;
+        case 0x6E:
+          switch (c.ColiSubType)
+          {
+            case 0x01:
+              {
+                var coli = (ColiType6E01)c;
+                PlotAsQuads(coli.Points, Color.yellow, "6E 01", parent);
+                break;
+              }
             default:
               break;
           }

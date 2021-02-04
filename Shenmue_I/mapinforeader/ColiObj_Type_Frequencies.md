@@ -15,16 +15,16 @@
 | 00 | 02 | 0D | 26 | 2 | ✔️ | These are simple panels like sides of buildings or fences |
 | 00 | 02 | 10 | 32 | 1 | ✔️ | These are simple panels like sides of buildings or fences |
 | 07 | -- | 01 | 4 | 13 | ✔️ | These seem like the garage-style doors and other door-like objects that load in at night to prevent you from going into stores. They appear in Dobuita in front of many of the stores but are not visible during the day. |
-| 07 | 02 | 03 | 6 | 1 |  |
-| 07 | 02 | 04 | 8 | 1 |  |
+| 07 | 02 | 03 | 6 | 1 | ✔️ | These look like the inner collision for the inside of the stores that have garage doors in 07 01 |
+| 07 | 02 | 04 | 8 | 1 | ✔️ | These look like the inner collision for the inside of the stores that have garage doors in 07 01 |
 | 08 | -- | 01 | 4 | 6 | ✔️ | In Dobuita, these are in pairs. Almost looks like door reinforcement |
 | 09 | -- | 01 | 4 | 13 | ✔️ | These are invisible walls. In Dobuita the best example is the invisible walls that block you from entering the street or continuing down the sidewalk. This also blocks you from reaching the walls of the parking lot where you can train (can't reach or go past the parking spot bumpers) | 
-| 09 | -- | 03 | 3 | 6 |  |
-| 09 | -- | 05 | 6 | 9 |  | First two words are a coordinate, plotting in 2d, need to figure the rest of this type. |
-| 09 | 02 | 03 | 6 | 6 |  |
-| 09 | 02 | 04 | 8 | 8 |  |
-| 09 | 02 | 05 | 10 | 4 |  |
-| 09 | 02 | 06 | 12 | 4 |  |
+| 09 | -- | 03 | 3 | 6 | ✔️ | These are 2d points with something associated as the first word. Idk what these are, will have to look more into it |
+| 09 | -- | 05 | 6 | 9 | ✔️ | First two words are a coordinate, plotting in 2d, need to figure the rest of this type. |
+| 09 | 02 | 03 | 6 | 6 | ✔️ | These seem like barriers around objects. Don't have all the objects plotting yet but it certainly looks like it in Dobuita |
+| 09 | 02 | 04 | 8 | 8 | ✔️ | These seem like barriers arou nd objects. Don't have all the objects plotting yet but it certainly looks like it in Dobuita |
+| 09 | 02 | 05 | 10 | 4 | ✔️ | These seem like barriers around objects. Don't have all the objects plotting yet but it certainly looks like it in Dobuita |
+| 09 | 02 | 06 | 12 | 4 | ✔️ | These seem like barriers around objects. Don't have all the objects plotting yet but it certainly looks like it in Dobuita |
 | 0A | -- | 01 | 4 | 18 | ✔️ | In Sakuragaoka there are stairs between pairs of these, same with Dobuita. These are stairs beginning and ends. |
 | 64 | -- | 01 | 4 | 57 | ✔️ | These appear to be collision on doors. This includes doors that Ryo can't interact with (but NPCs can). |
 | 65 | -- | 01 | 4 | 2 |  |
@@ -36,7 +36,7 @@
 | 6B | -- | 01 | 4 | 2 |  |
 | 6C | -- | 01 | 4 | 2 |  |
 | 6D | -- | 01 | 4 | 2 |  |
-| 6E | -- | 01 | 4 | 1 |  |
+| 6E | -- | 01 | 4 | 1 | ✔️ | This is a weird random piece somewhere. I expect most of these will be. |
 | 6F | -- | 01 | 4 | 1 |  |
 | 70 | -- | 01 | 4 | 1 |  |
 | 71 | -- | 01 | 4 | 1 |  |

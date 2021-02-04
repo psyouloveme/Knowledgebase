@@ -56,6 +56,28 @@ namespace mapinforeader
     }
   }
 
+  public class ColiType0902 : Coli2d
+  {
+    public ColiType0902() : base(9, 2) { }
+    public ColiType0902(uint size) : base(9, 2, size) { }
+    public override List<float> GetObjData()
+    {
+      Console.WriteLine("In ColiType0902");
+      return ObjData;
+    }
+  }
+
+  public class ColiType0702 : Coli2d
+  {
+    public ColiType0702() : base(7, 2) { }
+    public ColiType0702(uint size) : base(7, 2, size) { }
+    public override List<float> GetObjData()
+    {
+      Console.WriteLine("In ColiType0702");
+      return ObjData;
+    }
+  }
+
   public class ColiTypeZeroTwo : Coli2d
   {
     public ColiTypeZeroTwo() : base(0, 2) { }
@@ -121,6 +143,31 @@ namespace mapinforeader
       }
     }
   }
+  public class ColiType0903 : ColiObj
+  {
+    public ColiType0903() : base(9, 3) { }
+    public ColiType0903(uint size) : base(9, 3, size) { }
+    public override List<float> GetObjData()
+    {
+      Console.WriteLine("In 09 03");
+      return ObjData;
+    }
+
+    public List<Vector3> Points
+    {
+      get
+      {
+        // all of the 09 05s are 6 words long
+        // discard everything after the first 2
+        // because idk what it represents
+        List<Vector3> ret = new List<Vector3>();
+        var x = this.ObjData[1];
+        var z = this.ObjData[2];
+        ret.Add(new Vector3(x, 0, z));
+        return ret;
+      }
+    }
+  }
   public class ColiType0905 : ColiObj
   {
     public ColiType0905() : base(9, 5) { }
@@ -154,6 +201,16 @@ namespace mapinforeader
     public override List<float> GetObjData()
     {
       Console.WriteLine("In 10");
+      return ObjData;
+    }
+  }
+  public class ColiType6E01 : Coli2d
+  {
+    public ColiType6E01() : base(0x6E, 1) { }
+    public ColiType6E01(uint size) : base(0x6E, 1, size) { }
+    public override List<float> GetObjData()
+    {
+      Console.WriteLine("In 6E 01");
       return ObjData;
     }
   }
