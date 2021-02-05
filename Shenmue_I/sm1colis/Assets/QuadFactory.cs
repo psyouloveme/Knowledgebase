@@ -11,8 +11,8 @@ namespace coliplot {
             {
                 new Vector3(p1.x, p1.y, p1.z),
                 new Vector3(p2.x, p1.y, p2.z),
-                new Vector3(p1.x, 5, p1.z),
-                new Vector3(p2.x, 5, p2.z)
+                new Vector3(p1.x, 3, p1.z),
+                new Vector3(p2.x, 3, p2.z)
 
             };
             int[] tris = new int[6]
