@@ -22,13 +22,17 @@ namespace mapinforeader
 
     public class ColiInfo
     {
-      public void ReadColiObjs()
+      public void ParseColiContent()
       {
         this.ColiObjs = new List<ColiObj>();
         MemoryStream s = new MemoryStream(this.Content);
+      }
+
+      public void ReadColiObjs(Stream s)
+      {
         using (BinaryReader r = new BinaryReader(s))
         {
-          while (r.BaseStream.Position < this.Content.Length)
+          while (r.BaseStream.Position < this.ContentOffset + this.Size)
           {
             ColiObj coli;
             byte[] nextWord = new byte[4],
@@ -250,6 +254,10 @@ namespace mapinforeader
           }
         }
       }
+      public ColiInfo()
+      {
+        ColiObjs = new List<ColiObj>();
+      }
 
       public List<ColiObj> ColiObjs { get; set; }
       public long HeaderOffset { get; set; }
@@ -288,7 +296,46 @@ namespace mapinforeader
         return headerList;
       }
     }
-
+    public static List<Cols.ColiInfo> LocateColiOffsets(BinaryReader reader)
+    {
+      List<Cols.ColiInfo> c = new List<Cols.ColiInfo>();
+      bool streamEnded = false;
+      while (!streamEnded)
+      {
+        int i;
+        for (i = 0; i < Cols.Headers.COLI.Length && !streamEnded; i++)
+        {
+          byte b;
+          try
+          {
+            b = reader.ReadByte();
+          }
+          catch
+          {
+            streamEnded = true;
+            break;
+          }
+          if (b < 0)
+          {
+            streamEnded = true;
+          }
+          if (b != Cols.Headers.COLI[i])
+          {
+            break;
+          }
+        }
+        if (i == Cols.Headers.COLI.Length)
+        {
+          var newcols = new Cols.ColiInfo();
+          newcols.HeaderOffset = reader.BaseStream.Position - i;
+          newcols.SizeOffset = reader.BaseStream.Position;
+          newcols.Size = BitConverter.ToUInt32(reader.ReadBytes(4), 0);
+          newcols.ContentOffset = reader.BaseStream.Position;
+          c.Add(newcols);
+        }
+      }
+      return c;
+    }
     public void ReadColi(BinaryReader reader)
     {
       ColiInfo coliInfo = new ColiInfo();
@@ -316,7 +363,7 @@ namespace mapinforeader
       {
         this.Colis = new List<ColiInfo>();
       }
-      coliInfo.ReadColiObjs();
+      coliInfo.ParseColiContent();
       this.Colis.Add(coliInfo);
     }
 

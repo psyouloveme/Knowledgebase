@@ -344,6 +344,46 @@ namespace mapinforeader
                     break;
             }
         }
+        public static List<Cols.ColiInfo> LocateColiOffsets(BinaryReader reader)
+        {
+            List<Cols.ColiInfo> c = new List<Cols.ColiInfo>();
+            bool streamEnded = false;
+            while (!streamEnded)
+            {
+                int i;
+                for (i = 0; i < Cols.Headers.COLI.Length && !streamEnded; i++)
+                {
+                    byte b;
+                    try
+                    {
+                        b = reader.ReadByte();
+                    }
+                    catch
+                    {
+                        streamEnded = true;
+                        break;
+                    }
+                    if (b < 0)
+                    {
+                        streamEnded = true;
+                    }
+                    if (b != Cols.Headers.COLI[i])
+                    {
+                        break;
+                    }
+                }
+                if (i == Cols.Headers.COLI.Length)
+                {
+                    var newcols = new Cols.ColiInfo();
+                    newcols.HeaderOffset = reader.BaseStream.Position - i;
+                    newcols.SizeOffset = reader.BaseStream.Position;
+                    newcols.Size = BitConverter.ToUInt32(reader.ReadBytes(4));
+                    newcols.ContentOffset = reader.BaseStream.Position;
+                    c.Add(newcols);
+                }
+            }
+            return c;
+        }
 
         public static Cols ReadCols(BinaryReader reader)
         {
