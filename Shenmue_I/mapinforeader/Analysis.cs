@@ -7,6 +7,85 @@ namespace mapinforeader.Utils
 {
     public static class Analysis {
 
+        public static List<Cols.ColiInfo> LocateColiOffsets(BinaryReader reader) {
+            List<Cols.ColiInfo> c = new List<Cols.ColiInfo>();
+            bool streamEnded = false;
+            while (!streamEnded) {
+                int i;
+                for (i = 0; i < Cols.Headers.COLI.Length && !streamEnded; i++){
+                    byte b;
+                    try {
+                        b = reader.ReadByte();
+                    } catch {
+                        streamEnded = true;
+                        break;
+                    }
+                    if (b < 0) {
+                        streamEnded = true;
+                    }
+                    if (b != Cols.Headers.COLI[i]){
+                        break;
+                    }
+                }
+                if (i == Cols.Headers.COLI.Length) {
+                    var newcols = new Cols.ColiInfo();
+                    newcols.HeaderOffset = reader.BaseStream.Position - i;
+                    newcols.SizeOffset = reader.BaseStream.Position;
+                    newcols.Size = BitConverter.ToUInt32(reader.ReadBytes(4));
+                    newcols.ContentOffset = reader.BaseStream.Position;
+                    c.Add(newcols);
+                }
+            }
+            return c;
+        }
+        public static void DumpFormattedTypeCountsToFile(List<Cols.ColiInfo> c, string filename)
+        {
+            Dictionary<string, int> typeStats = new Dictionary<string, int>();
+            c.ForEach(coli =>
+            {
+                coli.ColiObjs.ForEach(coliObj =>
+                {
+                    string key = "|" + coliObj.ColiType.ToString("X2");
+                    if (coliObj.ColiSubType.HasValue)
+                    {
+                        key += "|"+coliObj.ColiSubType.Value.ToString("X2");
+                    }
+                    else
+                    {
+                        key += "|--";
+                    }
+                    if (coliObj.ColiCount.HasValue)
+                    {
+                        // key += coliObj.ColiSubType.Value.ToString("X2");
+                        key += "|" + coliObj.ColiCount.Value.ToString("X2");
+                    }
+                    else
+                    {
+                        key += "|--";
+                    }
+                    key += "|" + coliObj.ObjData.Count;
+                    if (typeStats.ContainsKey(key))
+                    {
+                        typeStats[key]++;
+                    }
+                    else
+                    {
+                        typeStats[key] = 1;
+                    }
+                });
+            });
+            List<string> s = typeStats.Select(v => $"{v.Key} |{v.Value}|").ToList();
+            s.Sort();
+            FileStream f = File.Open(filename, FileMode.Create);
+            using (StreamWriter sw = new StreamWriter(f))
+            {
+                sw.WriteLine("|type|subtype|count|actualcount|frequency|");
+                sw.WriteLine("|----|-------|-----|-----------|-------- |");
+                s.ForEach(g => sw.WriteLine(g));
+            }
+            Console.WriteLine("-----------------------------------");
+        }
+
         public static void DumpFormattedTypeCountsToFile(Cols c, string filename) {
             Dictionary<string, int> typeStats = new Dictionary<string, int>();
             c.Colis.ForEach(coli =>
