@@ -75,13 +75,13 @@ namespace mapinforeader.Utils
                     }
                 });
             });
-            List<string> s = typeStats.Select(v => $"{v.Key} |  |  |  |  |{v.Value}|").ToList();
+            List<string> s = typeStats.Select(v => $"{v.Key}|{v.Value}|  |  |  |  |").ToList();
             s.Sort();
             FileStream f = File.Open(filename, FileMode.Create);
             using (StreamWriter sw = new StreamWriter(f))
             {
-                sw.WriteLine("|type|subtype|count|actualcount|Structure|Shape|Done|Info|frequency|");
-                sw.WriteLine("|----|-------|-----|-----------|---------|-----|----|----|---------|");
+                sw.WriteLine("|type|subtype|count|actualcount|frequency|Structure|Shape|Done|Info|");
+                sw.WriteLine("|----|-------|-----|-----------|---------|---------|-----|----|----|");
                 s.ForEach(g => sw.WriteLine(g));
             }
         }
