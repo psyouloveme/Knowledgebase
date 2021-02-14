@@ -4,8 +4,8 @@
 | 004C37BE | 2 |  |
 | 00763EBE | 2 |  |
 | 008C6CBE | 2 | These are both the 4th word in the coli, one appears to be the landing for the slide, the other appears to be a chair next to tom's hot dog cart. Could this be rotation? |
-| 0033B3BE | 2 | These two are both in the 4th word and have identical data, only different coords. |
-| 4060A53E | 2 |  |
+| 0033B3BE | 2 | These two are both in the 4th word and have identical data, only different coords. Are these the other two poles at the second apartment complex by the sakuragaoka exit? |
+| 4060A53E | 2 | This looks like the other two brick poles from the apartments next to nagai industries |
 | 00B072BE | 1 |  |
 | 803934BF | 1 |  |
 | 809D0F3F | 1 |  |

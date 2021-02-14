@@ -9,7 +9,7 @@ namespace mapinforeader
 {   
     class Program
     {
-        private const string FILE_NAME = "/mnt/c/Users/Matthew/Desktop/SM_D1_SCENE/01/D000/MAPINFO.BIN";
+        private const string FILE_NAME = "../sm1colis/Assets/disc3/MFSY_MAPINFO.BIN.bytes";
         static void Main(string[] args)
         {
             if (!File.Exists(FILE_NAME))
@@ -58,8 +58,9 @@ namespace mapinforeader
             }
 
             // Analysis.DumpFormatted0005FreqsToFile(infos, "0005ColFreqs.md");
-            Analysis.DumpFormatted0005ColsToFile(infos, "0005ColData.md");
+            // Analysis.DumpFormatted0005ColsToFile(infos, "0005ColData.md");
             // Analysis.DumpFormattedZeroThreeColsToFile(c, "0003ColLocs.md");
+            Analysis.DumpFormattedTypeCountsToFile(infos, "MFSY_ColCounts.md");
             // Console.WriteLine("Max 00 02 coord is " + Analysis.FindMaxZeroTwoCoord(c));
             // Console.WriteLine("Min 00 02 coord is " + Analysis.FindMinZeroTwoCoord(c));
         }

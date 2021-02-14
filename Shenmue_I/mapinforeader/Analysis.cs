@@ -75,16 +75,15 @@ namespace mapinforeader.Utils
                     }
                 });
             });
-            List<string> s = typeStats.Select(v => $"{v.Key} |{v.Value}|").ToList();
+            List<string> s = typeStats.Select(v => $"{v.Key} |  |  |  |  |{v.Value}|").ToList();
             s.Sort();
             FileStream f = File.Open(filename, FileMode.Create);
             using (StreamWriter sw = new StreamWriter(f))
             {
-                sw.WriteLine("|type|subtype|count|actualcount|frequency|");
-                sw.WriteLine("|----|-------|-----|-----------|-------- |");
+                sw.WriteLine("|type|subtype|count|actualcount|Structure|Shape|Done|Info|frequency|");
+                sw.WriteLine("|----|-------|-----|-----------|---------|-----|----|----|---------|");
                 s.ForEach(g => sw.WriteLine(g));
             }
-            Console.WriteLine("-----------------------------------");
         }
 
         public static void DumpFormattedTypeCountsToFile(Cols c, string filename) {
@@ -217,11 +216,13 @@ namespace mapinforeader.Utils
                             var coli = (ColiType0005)j;
                             StringBuilder s = new StringBuilder();
                             sw.WriteLine($"[{coli.ObjData[0]}, 0, {coli.ObjData[1]}]");
+                            sw.WriteLine($"| Hex | Float | Int32 |");
+                            sw.WriteLine($"|-----|-------|-------|");
                             for (int i = 2; i < coli.ObjData.Count; i++) {
                                 byte[] wordBytes = BitConverter.GetBytes(coli.ObjData[i]);
                                 var byteString = SMFileUtils.ConvertBytesToString(wordBytes);
-                                sw.Write($"| {byteString} |"); // string
-                                sw.Write($"| {coli.ObjData[i]} |"); // float
+                                sw.Write($"| {byteString} "); // string
+                                sw.Write($"| {coli.ObjData[i]} "); // float
                                 sw.Write($"| {BitConverter.ToInt32(wordBytes, 0)} |{sw.NewLine}"); // int32
                             }
                             sw.Write(sw.NewLine);
