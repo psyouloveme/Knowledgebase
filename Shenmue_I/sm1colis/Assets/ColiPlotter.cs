@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using mapinforeader;
@@ -25,7 +26,8 @@ namespace coliplot {
             }
             case 0x03: {
               var coli = (ColiTypeZeroThree)c;
-              PlotAsPoints(coli.Points, Color.green, "00 03", parent);
+              var name = BitConverter.ToString(BitConverter.GetBytes(coli.ObjData[0]));
+              PlotAsPoints(coli.Points, Color.green, $"00 03 {name}", parent);
               break;
             }
             default:
@@ -78,7 +80,8 @@ namespace coliplot {
             case 0x03:
               {
                 var coli = (ColiType0903)c;
-                PlotAsPoints(coli.Points, Color.red, "09 03", parent);
+                var name = BitConverter.ToString(BitConverter.GetBytes(coli.ObjData[0]));
+                PlotAsPoints(coli.Points, Color.red, $"09 03 {name}", parent);
                 break;
               }
             case 0x05:
@@ -208,7 +211,7 @@ namespace coliplot {
       Vector3 prev = Vector3.negativeInfinity;
       foreach (var v in vectors) {
         Vector3 vec = new Vector3(v.X, v.Y, v.Z);
-        if (Validator.ValidateVector3(vec)){
+        if (Validator.ValidateVector3(prev) && Validator.ValidateVector3(vec)){
           PlotColiQuad(prev, vec, color, baseName, parent);
         }
         prev = vec;
@@ -217,6 +220,7 @@ namespace coliplot {
 
     public static void PlotColiQuad(Vector3 v1, Vector3 v2, Color color, string name, GameObject parent) {
       if (!Validator.ValidateVector3(v1) || !Validator.ValidateVector3(v2)) {
+        Debug.LogWarningFormat("Not plotting quad between invalid coordinates:\n{0}\n{1}", v1, v2);
         return;
       }
       QuadFactory.MakeMesh(v1, v2, parent, name, color);

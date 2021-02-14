@@ -162,9 +162,10 @@
                     // discard everything after the first 2
                     // because idk what it represents
                     List<Vector3> ret = new List<Vector3>();
+                    var y = this.ObjData[0];
                     var x = this.ObjData[1];
                     var z = this.ObjData[2];
-                    ret.Add(new Vector3(x, 0, z));
+                    ret.Add(new Vector3(x, y, z));
                     return ret;
                 }
             }

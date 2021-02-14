@@ -7,22 +7,18 @@ using mapinforeader;
 using coliplot;
 
 public class PlotColiDataNew : MonoBehaviour {
+
   [SerializeField]
   TextAsset asset;
-  [SerializeField]
-  GameObject prefab;
+
   void Start()
   {
     if (asset == null) {
         throw new Exception("No asset provided.");
     }
-    if (prefab == null) {
-        throw new Exception("No game object prefab provided.");
-    }
     Quaternion rotation = new Quaternion(1, 1, 1, 1);
     float q = 0.0f;
     Color color = new Color(q, q, 1.0f);
-      // Debug.Log("read cols.");
     Stream s = new MemoryStream(asset.bytes);
     List<Cols.ColiInfo> colis = new List<Cols.ColiInfo>();
     using (BinaryReader reader = new BinaryReader(s, Encoding.ASCII)) {
@@ -39,7 +35,6 @@ public class PlotColiDataNew : MonoBehaviour {
     }
     colis.ForEach(j => {
       j.ColiObjs.ForEach(k => {
-
         ColiPlotter.PlotColiObj(k, null);
       });
     });

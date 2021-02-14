@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text;
 
 
 namespace mapinforeader.Utils
@@ -28,5 +29,13 @@ namespace mapinforeader.Utils
             }
             return b;
         }
+
+        public static string ConvertBytesToString(byte[] bytes) {
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in bytes) {
+              sb.Append(b.ToString("X2"));
+            }
+            return sb.ToString();
+        } 
     }
 }

@@ -1,7 +1,7 @@
 | Type | SubType? | Count? | Entry Count | Frequency | Structure | Shape | Done | Info |
 |------|----------|--------|-------------|-----------|-----------|------|------|------|
 | 00   | --       | 01     | 4           | 150       | single[4] | Vector 2d | ✔️    | These are simple panels |
-| 00   | --       | 03     | 3           | 61        | long?? model??<br />single[2] point| Point w/ Model? | ✔️    | These seem like models, have them plotting but there's more data there |
+| 00   | --       | 03     | 3           | 61        | long?? model??<br />single[2] point| Point w/ Model? | ✔️    | These seem like models, have them plotting but there's more data there. These appear to be vertical poles throughout town in Dobuita. See 0003ColLocs for more information |
 | 00   | --       | 05     | 6           | 43        | single[2] coord<br />long[4]????  | Point w/ Model?   | ✔️    | This isn't done, have points plotting in 2d, but there's more data in these. |
 | 00   | 02       | 03     | 6           | 58        | single[count*2] coords| Vector 2d | ✔️    | These are simple panels like sides of buildings or fences |
 | 00   | 02       | 04     | 8           | 36        | single[count*2] coords| Vector 2d | ✔️    | These are simple panels like sides of buildings or fences |

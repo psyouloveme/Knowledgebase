@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text;
 using System.IO;
 using System.Collections.Generic;
 
@@ -166,6 +167,104 @@ namespace mapinforeader.Utils
                 }
             }
         }
+
+        public static void DumpFormattedNineThreeColsToFile(List<Cols.ColiInfo> c, string filename)
+        {
+            FileStream l = File.Open(filename, FileMode.Create);
+            using (StreamWriter sw = new StreamWriter(l))
+            {
+                var zeroThreeCounts = new Dictionary<string, int>();
+                c.ForEach(h =>
+                {
+                    h.ColiObjs.ForEach(j =>
+                    {
+                        if ((j.ColiType == 0x09) && (j.ColiSubType.HasValue && j.ColiSubType.Value == 0x03)) {
+                            var coli = (ColiType0903)j;
+                            byte[] vOut = BitConverter.GetBytes(coli.ObjData[0]);
+                            string byteString = vOut[0].ToString("X2")
+                                            + vOut[1].ToString("X2")
+                                            + vOut[2].ToString("X2")
+                                            + vOut[3].ToString("X2");
+                            if (zeroThreeCounts.ContainsKey(byteString)){
+                                zeroThreeCounts[byteString]++;  
+                            } else {
+                                zeroThreeCounts[byteString] = 1;
+                            }
+                        } 
+                    });
+                });
+                sw.WriteLine("| Address? | Count | What is it? |");
+                sw.WriteLine("|----------|-------|-------------|");
+                var kvl = zeroThreeCounts.ToList();
+                kvl.Sort((a, b) => b.Value.CompareTo(a.Value));
+                foreach (var kv in kvl) {
+                    sw.WriteLine($"| {kv.Key} | {kv.Value} |  |");
+                }
+            }
+        }
+
+        public static void DumpFormatted0005ColsToFile(List<Cols.ColiInfo> c, string filename)
+        {
+            FileStream l = File.Open(filename, FileMode.Create);
+            using (StreamWriter sw = new StreamWriter(l))
+            {
+                var zeroFiveStrings = new List<string>();
+                c.ForEach(h =>
+                {
+                    h.ColiObjs.ForEach(j =>
+                    {
+                        if ((j.ColiType == 0x00) && (j.ColiSubType.HasValue && j.ColiSubType.Value == 0x05)) {
+                            var coli = (ColiType0005)j;
+                            StringBuilder s = new StringBuilder();
+                            sw.WriteLine($"[{coli.ObjData[0]}, 0, {coli.ObjData[1]}]");
+                            for (int i = 2; i < coli.ObjData.Count; i++) {
+                                byte[] wordBytes = BitConverter.GetBytes(coli.ObjData[i]);
+                                var byteString = SMFileUtils.ConvertBytesToString(wordBytes);
+                                sw.Write($"| {byteString} |"); // string
+                                sw.Write($"| {coli.ObjData[i]} |"); // float
+                                sw.Write($"| {BitConverter.ToInt32(wordBytes, 0)} |{sw.NewLine}"); // int32
+                            }
+                            sw.Write(sw.NewLine);
+                        } 
+                    });
+                });
+            }
+        }
+
+
+        public static void DumpFormatted0005FreqsToFile(List<Cols.ColiInfo> c, string filename)
+        {
+            FileStream l = File.Open(filename, FileMode.Create);
+            using (StreamWriter sw = new StreamWriter(l))
+            {
+                var zeroThreeCounts = new Dictionary<string, int>();
+                c.ForEach(h =>
+                {
+                    h.ColiObjs.ForEach(j =>
+                    {
+                        if ((j.ColiType == 0x00) && (j.ColiSubType.HasValue && j.ColiSubType.Value == 0x05)) {
+                            var coli = (ColiType0005)j;
+                            for (int i = 2; i < coli.ObjData.Count; i++) {
+                                var byteString = SMFileUtils.ConvertBytesToString(BitConverter.GetBytes(coli.ObjData[i]));
+                                if (zeroThreeCounts.ContainsKey(byteString)){
+                                    zeroThreeCounts[byteString]++;  
+                                } else {
+                                    zeroThreeCounts[byteString] = 1;
+                                }
+                            }
+                        } 
+                    });
+                });
+                sw.WriteLine("| Address? | Count | What is it? |");
+                sw.WriteLine("|----------|-------|-------------|");
+                var kvl = zeroThreeCounts.ToList();
+                kvl.Sort((a, b) => b.Value.CompareTo(a.Value));
+                foreach (var kv in kvl) {
+                    sw.WriteLine($"| {kv.Key} | {kv.Value} |  |");
+                }
+            }
+        }
+
         public static void DumpFormattedColsMetadataToFile(Cols c, string filename) {
             FileStream l = File.Open(filename, FileMode.Create);
             using (StreamWriter sw = new StreamWriter(l))

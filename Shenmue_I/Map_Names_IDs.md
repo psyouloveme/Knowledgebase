@@ -1,6 +1,6 @@
 # Map Names/IDs
 
-(*Note*: If someone wants to convert this to a markdown table, feel free to do it.)
+(*Note*: If someone wants to convert this to a markdown table, feel free to do it. DONE)
 
 
 | NAME | ID | LOCATION | APPERANCE | ENTRY POINTS |

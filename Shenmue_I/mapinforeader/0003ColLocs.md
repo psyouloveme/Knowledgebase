@@ -1,17 +1,17 @@
-| Address? | Count |
-|----------|-------|
-| 9C243C3E | 8 |
-| 02FA343E | 3 |
-| 7103553E | 3 |
-| FC033E3E | 2 |
-| 0678543E | 2 |
-| 2A5B593E | 2 |
-| 73DB573D | 2 |
-| 8AE5383E | 2 |
-| 5D413B3E | 2 |
-| 49283A3E | 2 |
-| 4820323E | 2 |
-| 53ED623E | 2 |
+| Address? | Count | What is it? |
+|----------|-------|-------------|
+| 9C243C3E | 8 | These are stone poles in front of gates 
+| 02FA343E | 3 | This is something next to the door to Nagai Industries
+| 7103553E | 3 | Seems like these are 3 vertical brick poles?
+| FC033E3E | 2 | These seem like vertical poles outside of the army surplus place? 
+| 0678543E | 2 | These are stone brick poles outside of the apartments right next the exit to sakuragaoka
+| 2A5B593E | 2 | These are stone brick poles outside of the apartments down the road from the exit to sakuragaoka
+| 73DB573D | 2 | 3 Are rendering in unity!? These are benches in the park next to the stairs up to sakuragaoka
+| 8AE5383E | 2 | These are poles on the building to the right of water dragon
+| 5D413B3E | 2 | These are poles on the shop 2 doors down from asia travel company (same style as previous)
+| 49283A3E | 2 | These are poles on the building next door to tomato convenience store (same style as previous 2)
+| 4820323E | 2 | These are poles on the building next door to the apartments just next to the exit to sakuragaoka (same style as previous 3)
+| 53ED623E | 2 | These are stone poles on the wall (might have mailboxes on them) between the first and second apartment buildings next to the exit to sakuragaoka
 | 483F863F | 1 |
 | 285E0840 | 1 |
 | 5DFA483E | 1 |
