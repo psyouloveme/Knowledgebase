@@ -82,18 +82,18 @@
             }
         }
 
-        public class ColiTypeZeroTwo : Coli2d {
-        public ColiTypeZeroTwo() : base(0,2) {}
-        public ColiTypeZeroTwo(uint size) : base(0,2,size){}
+        public class ColiType0002 : Coli2d {
+        public ColiType0002() : base(0,2) {}
+        public ColiType0002(uint size) : base(0,2,size){}
         public override List<float> GetObjData() {
             Console.WriteLine("In 20");
             return ObjData;
         }
         }
-        public class ColiTypeZeroThree : ColiObj
+        public class ColiType0003 : ColiObj
         {
-            public ColiTypeZeroThree() : base(0, 3) { }
-            public ColiTypeZeroThree(uint size) : base(0, 3, size) { }
+            public ColiType0003() : base(0, 3) { }
+            public ColiType0003(uint size) : base(0, 3, size) { }
             public override List<float> GetObjData()
             {
                 Console.WriteLine("In 30");
@@ -196,10 +196,10 @@
             }
         }
 
-        public class ColiTypeZeroOne : Coli2d
+        public class ColiType0001 : Coli2d
         {
-            public ColiTypeZeroOne() : base(0, 1) { }
-            public ColiTypeZeroOne(uint size) : base(0, 1, size) { }
+            public ColiType0001() : base(0, 1) { }
+            public ColiType0001(uint size) : base(0, 1, size) { }
             public override List<float> GetObjData()
             {
                 Console.WriteLine("In 10");
@@ -216,10 +216,10 @@
                 return ObjData;
             }
         }
-        public class ColiTypeSixFourZeroOne : Coli2d
+        public class ColiType6401 : Coli2d
         {
-            public ColiTypeSixFourZeroOne() : base(0x64, 1) { }
-            public ColiTypeSixFourZeroOne(uint size) : base(0x64, 1, size) { }
+            public ColiType6401() : base(0x64, 1) { }
+            public ColiType6401(uint size) : base(0x64, 1, size) { }
             public override List<float> GetObjData()
             {
                 Console.WriteLine("In 64 01");

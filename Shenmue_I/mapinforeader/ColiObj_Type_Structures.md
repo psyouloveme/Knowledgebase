@@ -71,6 +71,7 @@ Shape `0x03` contains some sort of pointer or reference maybe and then an (X, Z)
 |----------|--------|------|-------------|
 | `0x08`   | `0x04` | ???? | ????
 | `0x10`   | `0x08` | float[2] | (X, Z) coordinate
+| `0x14`   | `0x04` | ----- | Terminator
 
 ### Example
 ```

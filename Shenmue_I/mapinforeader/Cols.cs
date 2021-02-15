@@ -66,7 +66,7 @@ namespace mapinforeader
                                 switch (colisubtype.Value)
                                 {
                                     case 0x02:
-                                        coli = new ColiTypeZeroTwo(coliCount);
+                                        coli = new ColiType0002(coliCount);
                                         break;
                                     default:
                                         coli = new ColiObj(coliType, colisubtype, coliCount);
@@ -124,10 +124,10 @@ namespace mapinforeader
                                 switch (colisubtype.Value)
                                 {
                                     case 0x03:
-                                        coli = new ColiTypeZeroThree();
+                                        coli = new ColiType0003();
                                         break;
                                     case 0x01:
-                                        coli = new ColiTypeZeroOne();
+                                        coli = new ColiType0001();
                                         break;
                                     case 0x05:
                                         coli = new ColiType0005();
@@ -142,7 +142,7 @@ namespace mapinforeader
                                 switch (colisubtype.Value)
                                 {
                                     case 0x01:
-                                        coli = new ColiTypeSixFourZeroOne();
+                                        coli = new ColiType6401();
                                         break;
                                     default:
                                         coli = new ColiObj(coliType, colisubtype, null);

@@ -141,7 +141,7 @@ namespace mapinforeader.Utils
                     h.ColiObjs.ForEach(j =>
                     {
                         if ((j.ColiType == 0x00) && (j.ColiSubType.HasValue && j.ColiSubType.Value == 0x03)) {
-                            var coli = (ColiTypeZeroThree)j;
+                            var coli = (ColiType0003)j;
                             foreach(var cp in coli.Points) {
                                 byte[] vOut = BitConverter.GetBytes(cp.Y);
                                 string byteString = vOut[0].ToString("X2")
