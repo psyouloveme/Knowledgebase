@@ -39,6 +39,41 @@ namespace mapinforeader.Utils
             }
             return c;
         }
+
+        public static void DumpFormattedTypeCountsToFileNew(List<Cols.ColiInfo> c, string filename)
+        {
+            Dictionary<string, int> typeStats = new Dictionary<string, int>();
+            c.ForEach(coli =>
+            {
+                coli.ColiDatas.ForEach(coliObj =>
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendFormat("| {0} | {1}", 
+                        coliObj.LayerId.ToString("X2"), 
+                        coliObj.ShapeId.ToString("X2")
+                    );
+                    var key = sb.ToString();
+                    if (typeStats.ContainsKey(key))
+                    {
+                        typeStats[key]++;
+                    }
+                    else
+                    {
+                        typeStats[key] = 1;
+                    }
+                });
+            });
+            List<string> s = typeStats.Select(v => $"{v.Key} | {v.Value} |  |  |  |  |").ToList();
+            s.Sort();
+            FileStream f = File.Open(filename, FileMode.Create);
+            using (StreamWriter sw = new StreamWriter(f))
+            {
+                sw.WriteLine("|layer|shape|frequency|Structure|Shape|Done|Info|");
+                sw.WriteLine("|-----|-----|---------|---------|-----|----|----|");
+                s.ForEach(g => sw.WriteLine(g));
+            }
+        }
+
         public static void DumpFormattedTypeCountsToFile(List<Cols.ColiInfo> c, string filename)
         {
             Dictionary<string, int> typeStats = new Dictionary<string, int>();

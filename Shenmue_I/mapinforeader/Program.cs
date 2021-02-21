@@ -9,7 +9,7 @@ namespace mapinforeader
 {   
     class Program
     {
-        private const string FILE_NAME = "../sm1colis/Assets/disc3/MFSY_MAPINFO.BIN.bytes";
+        private const string FILE_NAME = "./mapinfos/D000_MAPINFO.BIN.bytes";
         static void Main(string[] args)
         {
             if (!File.Exists(FILE_NAME))
@@ -36,31 +36,31 @@ namespace mapinforeader
                     using (FileStream fs = new FileStream(FILE_NAME, FileMode.Open, FileAccess.Read)){
                     // Console.WriteLine("reading stream");
                     fs.Seek(coli.ContentOffset, SeekOrigin.Begin);
-                    coli.ReadColiObjs(fs);
+                    coli.ReadColiObjsNew(fs);
                 }
-                for(int idx = 0; idx < infos.Count; idx++) {
-                    // Console.WriteLine($"Reading objs from coli {idx}");
-                    foreach (var coliObj in infos[idx].ColiObjs)
-                    {
-                        // Console.Write($"Found coliObj {coliObj.ColiType:X2}");
-                        if (coliObj.ColiSubType.HasValue)
-                        {
-                            // Console.Write($" {coliObj.ColiSubType.Value:X2}");
-                        }
-                        if (coliObj.ColiCount.HasValue)
-                        {
-                            // Console.Write($" {coliObj.ColiCount.Value:X2}");
-                        }
-                        // Console.Write("\n");
-                    }
-                }
+                // for(int idx = 0; idx < infos.Count; idx++) {
+                //     // Console.WriteLine($"Reading objs from coli {idx}");
+                //     foreach (var coliObj in infos[idx].ColiObjs)
+                //     {
+                //         // Console.Write($"Found coliObj {coliObj.ColiType:X2}");
+                //         if (coliObj.ColiSubType.HasValue)
+                //         {
+                //             // Console.Write($" {coliObj.ColiSubType.Value:X2}");
+                //         }
+                //         if (coliObj.ColiCount.HasValue)
+                //         {
+                //             // Console.Write($" {coliObj.ColiCount.Value:X2}");
+                //         }
+                //         // Console.Write("\n");
+                //     }
+                // }
                 // Analysis.DumpFormattedTypeCountsToFile(infos, "New_Frequencies.md");
             }
 
             // Analysis.DumpFormatted0005FreqsToFile(infos, "0005ColFreqs.md");
             // Analysis.DumpFormatted0005ColsToFile(infos, "0005ColData.md");
             // Analysis.DumpFormattedZeroThreeColsToFile(c, "0003ColLocs.md");
-            Analysis.DumpFormattedTypeCountsToFile(infos, "MFSY_ColCounts.md");
+            Analysis.DumpFormattedTypeCountsToFileNew(infos, "MFSY_ColCounts_Refactored.md");
             // Console.WriteLine("Max 00 02 coord is " + Analysis.FindMaxZeroTwoCoord(c));
             // Console.WriteLine("Min 00 02 coord is " + Analysis.FindMinZeroTwoCoord(c));
         }
