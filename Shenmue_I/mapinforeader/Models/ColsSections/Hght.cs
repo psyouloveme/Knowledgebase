@@ -11,8 +11,11 @@ namespace mapinforeader.Models.ColsSections {
     ///<seealso cref="ColiType2"/>
     public class Hght : ColsSection {
         public static readonly string Identifier = "HGHT";
+        
+        public List<HghtObject> HghtDatas { get; set; }
+
         public Hght() : base() {
-            
+            this.HghtDatas = new List<HghtObject>();   
         }
     }
 }

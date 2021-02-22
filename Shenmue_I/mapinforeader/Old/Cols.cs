@@ -267,7 +267,7 @@ namespace mapinforeader.Old
                         ColiObject coli;
                         uint coliLayer = r.ReadUInt32();
                         uint coliShape = r.ReadUInt32();
-                        Console.WriteLine($"Creating coli with layer {coliLayer.ToString("X2")} shape: {coliShape.ToString("X2")}");
+                        // Console.WriteLine($"Creating coli with layer {coliLayer.ToString("X2")} shape: {coliShape.ToString("X2")}");
                         switch (coliShape) {
                             case 0x01:
                                 coli = new ColiType1(coliLayer, r);
@@ -351,7 +351,7 @@ namespace mapinforeader.Old
             {
                 coliInfo.ContentOffset = reader.BaseStream.Position;
                 coliInfo.Content = reader.ReadBytes(Convert.ToInt32(coliSize));
-                SMFileUtils.WriteBytesToFile("D000_MAPINFO_COLS_COLI0_DEBUG.BIN.bytes", coliInfo.Content);
+                // SMFileUtils.WriteBytesToFile("D000_MAPINFO_COLS_COLI0_DEBUG.BIN.bytes", coliInfo.Content);
             }
             else
             {
@@ -450,12 +450,12 @@ namespace mapinforeader.Old
                         }
                     }
                 }
-                catch (EndOfStreamException e)
+                catch (EndOfStreamException)
                 {
                     cols = null;
                     streamEnded = true;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     cols = null;
                 }
@@ -478,13 +478,13 @@ namespace mapinforeader.Old
                                 endMismatch = true;
                             }
                         }
-                        catch (EndOfStreamException e)
+                        catch (EndOfStreamException)
                         {
                             cols = null;
                             streamEnded = true;
                             endMismatch = true;
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             cols = null;
                             endMismatch = true;
@@ -513,7 +513,7 @@ namespace mapinforeader.Old
                         cols.ContentOffset = reader.BaseStream.Position;
                         // subtract the 4 bytes for the size, read the remainder of the coli content
                         cols.Content = reader.ReadBytes(Convert.ToInt32(colsSize) - 16);
-                        SMFileUtils.WriteBytesToFile("COLS_D000_DEBUG.BIN.bytes", cols.Content);
+                        // SMFileUtils.WriteBytesToFile("COLS_D000_DEBUG.BIN.bytes", cols.Content);
                     }
                 }
             }
