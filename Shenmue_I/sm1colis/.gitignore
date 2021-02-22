@@ -73,3 +73,7 @@ crashlytics-build.properties
 # Ignore ripped assets
 /[Aa]ssets/*MAPINFO.BIN.bytes
 /[Aa]ssets/*MAPINFO.BIN.bytes.meta
+/[Aa]ssets/disc2/
+/[Aa]ssets/disc2.meta
+/[Aa]ssets/disc3/
+/[Aa]ssets/disc3.meta
