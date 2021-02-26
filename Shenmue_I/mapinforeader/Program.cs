@@ -9,7 +9,7 @@ namespace mapinforeader
 {   
     class Program
     {
-        private const string FILE_NAME = "./Reference/D000_MAPINFO.BIN.bytes";
+        private const string FILE_NAME = "./Reference/JOMO_MAPINFO.BIN.bytes";
         static void Main(string[] args)
         {
             if (!File.Exists(FILE_NAME))

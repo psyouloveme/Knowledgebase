@@ -416,7 +416,7 @@ namespace mapinforeader.Old
                     var newcols = new Cols.ColiInfo();
                     newcols.HeaderOffset = reader.BaseStream.Position - i;
                     newcols.SizeOffset = reader.BaseStream.Position;
-                    newcols.Size = BitConverter.ToUInt32(reader.ReadBytes(4));
+                    newcols.Size = BitConverter.ToUInt32(reader.ReadBytes(4), 0);
                     newcols.ContentOffset = reader.BaseStream.Position;
                     c.Add(newcols);
                 }

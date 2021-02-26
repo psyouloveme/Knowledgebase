@@ -99,7 +99,7 @@ namespace mapinforeader.Util
                     var newcols = new Old.Cols.ColiInfo();
                     newcols.HeaderOffset = reader.BaseStream.Position - i;
                     newcols.SizeOffset = reader.BaseStream.Position;
-                    newcols.Size = BitConverter.ToUInt32(reader.ReadBytes(4));
+                    newcols.Size = BitConverter.ToUInt32(reader.ReadBytes(4), 0);
                     newcols.ContentOffset = reader.BaseStream.Position;
                     c.Add(newcols);
                 }
@@ -441,59 +441,59 @@ namespace mapinforeader.Util
                 });
             }
         }
-        public static float FindMaxZeroTwoCoord(Old.Cols c) {
-            return c.Colis.Aggregate(float.MinValue,
-                (max, next) =>
-                {
-                    float colMax = next.ColiObjs.Aggregate(max,
-                        (colmax, next) =>
-                        {
-                            float dataMax = next.ObjData.Aggregate(colmax,
-                                (datmax, next) =>
-                                {
-                                    return next > datmax ? next : datmax;
-                                },
-                                d => d
-                            );
-                            // Console.WriteLine("Found max: " + dataMax);
-                            return dataMax > colmax ? dataMax : colmax;
-                        },
-                        cm => cm
-                    );
-                    // Console.WriteLine("Found COL max: " + colMax);
-                    return colMax > max ? colMax : max;
-                },
-                cc => cc
-            );
-        }
-        public static float FindMinZeroTwoCoord(Old.Cols c) {
-            return c.Colis.Aggregate(float.MaxValue,
-                (min, next) =>
-                {
-                    float colMin = next.ColiObjs.Aggregate(min,
-                        (colmin, next) =>
-                        {
-                            float dataMin = next.ObjData.Aggregate(colmin,
-                                (datmin, next) =>
-                                {
-                                    if (next == float.NaN)
-                                    {
-                                        Console.WriteLine("FOUND A NAN");
-                                    }
-                                    return next < datmin ? next : datmin;
-                                },
-                                d => d
-                            );
-                            // Console.WriteLine("Found min: " + dataMin);
-                            return dataMin < colmin ? dataMin : colmin;
-                        },
-                        cm => cm
-                    );
-                    // Console.WriteLine("Found COL min: " + colMin);
-                    return colMin < min ? colMin : min;
-                },
-                cc => cc
-            );
-        }
+        // public static float FindMaxZeroTwoCoord(Old.Cols c) {
+        //     return c.Colis.Aggregate(float.MinValue,
+        //         (max, next) =>
+        //         {
+        //             float colMax = next.ColiObjs.Aggregate(max,
+        //                 (colmax, next) =>
+        //                 {
+        //                     float dataMax = next.ObjData.Aggregate(colmax,
+        //                         (datmax, next) =>
+        //                         {
+        //                             return next > datmax ? next : datmax;
+        //                         },
+        //                         d => d
+        //                     );
+        //                     // Console.WriteLine("Found max: " + dataMax);
+        //                     return dataMax > colmax ? dataMax : colmax;
+        //                 },
+        //                 cm => cm
+        //             );
+        //             // Console.WriteLine("Found COL max: " + colMax);
+        //             return colMax > max ? colMax : max;
+        //         },
+        //         cc => cc
+        //     );
+        // }
+        // public static float FindMinZeroTwoCoord(Old.Cols c) {
+        //     return c.Colis.Aggregate(float.MaxValue,
+        //         (min, next) =>
+        //         {
+        //             float colMin = next.ColiObjs.Aggregate(min,
+        //                 (colmin, next) =>
+        //                 {
+        //                     float dataMin = next.ObjData.Aggregate(colmin,
+        //                         (datmin, next) =>
+        //                         {
+        //                             if (next == float.NaN)
+        //                             {
+        //                                 Console.WriteLine("FOUND A NAN");
+        //                             }
+        //                             return next < datmin ? next : datmin;
+        //                         },
+        //                         d => d
+        //                     );
+        //                     // Console.WriteLine("Found min: " + dataMin);
+        //                     return dataMin < colmin ? dataMin : colmin;
+        //                 },
+        //                 cm => cm
+        //             );
+        //             // Console.WriteLine("Found COL min: " + colMin);
+        //             return colMin < min ? colMin : min;
+        //         },
+        //         cc => cc
+        //     );
+        // }
     }
 }

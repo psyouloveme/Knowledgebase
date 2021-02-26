@@ -32,7 +32,7 @@ namespace mapinforeader.Util
                 cols.HeaderOffset = position.Value;
                 cols.SizeOffset = position.Value + Cols.Identifier.Length;
                 this.BaseStream.Seek(position.Value + Cols.Identifier.Length, SeekOrigin.Begin);
-                cols.Size = BitConverter.ToUInt32(this.ReadBytes(4));
+                cols.Size = BitConverter.ToUInt32(this.ReadBytes(4), 0);
                 cols.ContentOffset = this.BaseStream.Position;
             }
             return cols;
@@ -46,7 +46,7 @@ namespace mapinforeader.Util
                 coli.HeaderOffset = position.Value;
                 coli.SizeOffset = position.Value + Coli.Identifier.Length;
                 this.BaseStream.Seek(position.Value + Coli.Identifier.Length, SeekOrigin.Begin);
-                coli.Size = BitConverter.ToUInt32(this.ReadBytes(4));
+                coli.Size = BitConverter.ToUInt32(this.ReadBytes(4), 0);
                 coli.ContentOffset = this.BaseStream.Position;
             }
             return coli;
@@ -60,7 +60,7 @@ namespace mapinforeader.Util
                 hght.HeaderOffset = position.Value;
                 hght.SizeOffset = position.Value + Hght.Identifier.Length;
                 this.BaseStream.Seek(position.Value + Hght.Identifier.Length, SeekOrigin.Begin);
-                hght.Size = BitConverter.ToUInt32(this.ReadBytes(4));
+                hght.Size = BitConverter.ToUInt32(this.ReadBytes(4), 0);
                 hght.ContentOffset = this.BaseStream.Position;
             }
             return hght;
