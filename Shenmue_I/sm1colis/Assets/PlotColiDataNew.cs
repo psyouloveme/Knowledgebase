@@ -3,7 +3,8 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
-using mapinforeader;
+using mapinforeader.Models.MapinfoSections;
+using mapinforeader.Util;
 using coliplot;
 
 public class PlotColiDataNew : MonoBehaviour {
@@ -19,39 +20,24 @@ public class PlotColiDataNew : MonoBehaviour {
     Quaternion rotation = new Quaternion(1, 1, 1, 1);
     float q = 0.0f;
     Color color = new Color(q, q, 1.0f);
+    Cols cols = null;
     Stream s = new MemoryStream(asset.bytes);
-    List<Cols.ColiInfo> colis = new List<Cols.ColiInfo>();
-    using (BinaryReader reader = new BinaryReader(s, Encoding.ASCII)) {
-      colis = Cols.LocateColiOffsets(reader);
+    using (ColsReader r = new ColsReader(s)) {
+      cols = r.ReadCols();
     }
-    foreach (var coli in colis)
-    {
-      using (MemoryStream fs = new MemoryStream(asset.bytes))
-      {
-        // Console.WriteLine("reading stream");
-        fs.Seek(coli.ContentOffset, SeekOrigin.Begin);
-        coli.ReadColiObjs(fs);
+    if (cols == null || cols.Colis == null || cols.Colis.Count == 0) {
+      Debug.Log("No collision found!");
+      return;
+    }
+
+    // Plot the colis
+    for (int coliIdx = 0; coliIdx < cols.Colis.Count; coliIdx++) {
+      var coli = cols.Colis[coliIdx];
+      var coliGameObj = new GameObject();
+      coliGameObj.name = $"COLI {coliIdx}";
+      for (int coliObjIdx = 0; coliObjIdx < coli.ColiDatas.Count; coliObjIdx++) {
+        ColiPlotter.PlotColiObj(coli.ColiDatas[coliObjIdx], coliGameObj, $"COLI {coliIdx}");
       }
     }
-    colis.ForEach(j => {
-      j.ColiObjs.ForEach(k => {
-        ColiPlotter.PlotColiObj(k, null);
-      });
-    });
-    //   // Debug.Log("staring procesing.");
-    //   Cols cols = Cols.ReadCols(reader);
-    //   // Debug.Log("read cols.");
-    //   cols.Colis.ForEach(h => {
-    //     // Debug.Log("Creating with " + h);
-    //     // Debug.Log("H.size is" + h.Size);
-    //     // Debug.Log("H.coliobjs.length is" + h.ColiObjs.Count);
-    //     int coliObjId = 0;
-    //     h.ColiObjs.ForEach(j => {
-    //       // Debug.Log("Processing obj" + j.ColiType.ToString("X2"));
-    //       ColiPlotter.PlotColiObj(j, null);
-    //     });
-    //   });
-    //   Validator.FindFarObjects();
-    // } 
   }
 }  

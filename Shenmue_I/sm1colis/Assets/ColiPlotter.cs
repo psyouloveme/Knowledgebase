@@ -1,193 +1,34 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using mapinforeader;
+using mapinforeader.Models.ColiObjects;
 
 namespace coliplot {
   public static class ColiPlotter {
-    public static void PlotColiObj(ColiObj c, GameObject parent) {
-      switch(c.ColiType) {
-        case 0x00:
-          switch (c.ColiSubType) {
-            case 0x01: {
-              var coli = (ColiTypeZeroOne)c;
-              PlotAsQuads(coli.Points, Color.blue, "00 01", parent);
-              break;
-            }
-            case 0x02: {
-              var coli = (ColiTypeZeroTwo)c;
-              PlotAsQuads(coli.Points, Color.red, "00 02", parent);
-              break;
-            }
-            case 0x05: {
-              var coli = (ColiType0005)c;
-              PlotAsPoints(coli.Points, Color.yellow, "00 05", parent);
-              break;
-            }
-            case 0x03: {
-              var coli = (ColiTypeZeroThree)c;
-              var name = BitConverter.ToString(BitConverter.GetBytes(coli.ObjData[0]));
-              PlotAsPoints(coli.Points, Color.green, $"00 03 {name}", parent);
-              break;
-            }
-            default:
-              break;
-          }
+    public static void PlotColiObj(ColiObject c, GameObject parent, string labelStart = "") {
+      switch(c.ShapeId) {
+        case 1: {
+          var coli = (ColiType1)c;
+          PlotAsQuads(coli.Coordinates, Color.blue, $"{labelStart} 01", parent);
           break;
-        case 0x07:
-          switch (c.ColiSubType) {
-            case 0x01: {
-              var coli = (ColiType0701)c;
-              PlotAsQuads(coli.Points, Color.magenta, "07 01", parent);
-              break;
-            }
-            case 0x02:
-              {
-                var coli = (ColiType0702)c;
-                PlotAsQuads(coli.Points, Color.magenta, "07 02", parent);
-                break;
-              }
-            default:
-              break;
-          }
+        }
+        case 2: {
+          var coli = (ColiType2)c;
+          PlotAsQuads(coli.Coordinates, Color.red, $"{labelStart} 02", parent);
           break;
-        case 0x08:
-          switch (c.ColiSubType) {
-            case 0x01: {
-              var coli = (ColiType0801)c;
-              PlotAsQuads(coli.Points, Color.green, "08 01", parent);
-              break;
-            }
-            default:
-              break;
-          }
+        }
+        case 3: {
+          var coli = (ColiType3)c;
+          var name = BitConverter.ToString(BitConverter.GetBytes(coli.Data[0]));
+          PlotAsPoint(coli.Coordinate, Color.green, $"{labelStart} 03 {name}", parent);
           break;
-        case 0x09:
-          switch (c.ColiSubType)
-          {
-            case 0x01:
-              {
-                var coli = (ColiType0901)c;
-                PlotAsQuads(coli.Points, Color.cyan, "09 01", parent);
-                break;
-              }
-            case 0x02:
-              {
-                var coli = (ColiType0902)c;
-                PlotAsQuads(coli.Points, Color.black, "09 02", parent);
-                break;
-              }
-            case 0x03:
-              {
-                var coli = (ColiType0903)c;
-                var name = BitConverter.ToString(BitConverter.GetBytes(coli.ObjData[0]));
-                PlotAsPoints(coli.Points, Color.red, $"09 03 {name}", parent);
-                break;
-              }
-            case 0x05:
-              {
-                var coli = (ColiType0905)c;
-                PlotAsPoints(coli.Points, Color.red, "09 05", parent);
-                break;
-              }
-            default:
-              break;
-          }
+        }
+        case 5: {
+          var coli = (ColiType5)c;
+          var name = BitConverter.ToString(BitConverter.GetBytes(coli.Data[0]));
+          PlotAsPoint(coli.Coordinate, Color.green, $"{labelStart} 03 {name}", parent);
           break;
-        case 0x0A:
-          switch (c.ColiSubType)
-          {
-            case 0x01:
-              {
-                var coli = (ColiType0A01)c;
-                PlotAsQuads(coli.Points, Color.white, "09 01", parent);
-                break;
-              }
-            default:
-              break;
-          }
-          break;
-        case 0x64:
-          switch (c.ColiSubType) {
-            case 0x01: {
-              var coli = (ColiTypeSixFourZeroOne)c;
-              PlotAsQuads(coli.Points, Color.yellow, "64 01", parent);
-              break;
-            }
-            default:
-              break;
-          }
-          break;
-        case 0x65:
-        case 0x66:
-        case 0x67:
-        case 0x68:
-        case 0x69:
-        case 0x6A:
-        case 0x6B:
-        case 0x6C:
-        case 0x6D:
-          switch (c.ColiSubType)
-          {
-            case 0x01:
-              {
-                var coli = (Coli2d)c;
-                PlotAsQuads(coli.Points, Color.yellow, $"Misc 1 {coli.ColiType} {coli.ColiSubType.Value}", parent);
-                break;
-              }
-            default:
-              break;
-          }
-          break;
-        // case 0x6E:
-        //   switch (c.ColiSubType)
-        //   {
-        //     case 0x01:
-        //       {
-        //         var coli = (ColiType6E01)c;
-        //         PlotAsQuads(coli.Points, Color.yellow, "6E 01", parent);
-        //         break;
-        //       }
-        //     default:
-        //       break;
-        //   }
-        //   break;
-        case 0x6E:
-        case 0x6F:
-        case 0x70:
-        case 0x71:
-        case 0x72:
-        case 0x73:
-        case 0x74:
-        case 0x75:
-        case 0x76:
-          switch (c.ColiSubType)
-          {
-            case 0x01:
-              {
-                var coli = (Coli2d)c;
-                PlotAsQuads(coli.Points, Color.yellow, $"Misc 2 {coli.ColiType} {coli.ColiSubType.Value}", parent);
-                break;
-              }
-            default:
-              break;
-          }
-          break;
-        case 0xC8:
-          switch (c.ColiSubType)
-          {
-            case 0x02:
-              {
-                var coli = (ColiTypeC802)c;
-                PlotAsQuads(coli.Points, Color.green, "C8 02", parent);
-                break;
-              }
-            default:
-              break;
-          }
-          break;
-        default:
-          break;
+        }
       }
     }
 
@@ -198,12 +39,22 @@ namespace coliplot {
       }
     }
 
+    public static void PlotAsPoint(System.Numerics.Vector3 vector, Color color, string name, GameObject parent) {
+      Vector3 vec = new Vector3(vector.X, vector.Y, vector.Z);
+      PlotColiQuad(vec, color, name, parent);
+    }
+
     public static void PlotColiQuad(Vector3 pos, Color color, string name, GameObject parent) {
       GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
       sphere.name = name;
       sphere.transform.position = pos;
       sphere.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
       sphere.GetComponent<Renderer>().material.color = color;
+      if (parent != null)
+      {
+        sphere.transform.SetParent(parent.transform);
+      }
+
     }
 
 
