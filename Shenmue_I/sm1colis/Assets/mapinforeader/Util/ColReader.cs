@@ -19,7 +19,7 @@ namespace mapinforeader.Util
             Cols cols = this.ReadColsMetadata();
             if (cols != null) {
                 this.ReadColis(cols);
-                // this.ReadHghts(cols);
+                this.ReadHghts(cols);
             }
             return cols;
         }

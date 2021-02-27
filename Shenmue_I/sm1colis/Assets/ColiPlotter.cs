@@ -2,9 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using mapinforeader.Models.ColiObjects;
+using mapinforeader.Models.ColsSections;
 
 namespace coliplot {
   public static class ColiPlotter {
+
+    public static void PlotHghtObj(HghtObject h, GameObject parent, string labelStart = ""){
+      PlotAsQuads(h.Coordinates, Color.green, $"{labelStart} {h.ShapeId.ToString("X2")}", parent);
+    }
     public static void PlotColiObj(ColiObject c, GameObject parent, string labelStart = "") {
       switch(c.ShapeId) {
         case 1: {

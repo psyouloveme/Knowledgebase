@@ -21,6 +21,8 @@ namespace mapinforeader.Models.ColsSections {
         ///<summary>The count of coordinates, as read from the inner data</summary>
         public uint Count { get; set; }
 
+        public uint Shape { get; set; }
+
         ///<summary>A list of plottable coordinates derived from <c>this.Data</c> or
         ///read from a <c>MemoryStream</c> provided to the constructor of a derived class</summary>
         public List<Vector3> Coordinates { get; set; }
@@ -67,9 +69,13 @@ namespace mapinforeader.Models.ColsSections {
             this.ShapeId = shapeId;
             this.Coordinates = new List<Vector3>();
             long streamPosition = reader.BaseStream.Position;
-            // read the count of coordinates and seek back to capture the count in Data
-            this.Count = reader.ReadUInt32();
-            reader.BaseStream.Seek(-HghtObject.UINT32_SIZE, SeekOrigin.Current);
+            if (this.ShapeId == 0x06){
+                // read the count of coordinates and seek back to capture the count in Data
+                this.Count = reader.ReadUInt32();
+                reader.BaseStream.Seek(-HghtObject.UINT32_SIZE, SeekOrigin.Current);
+            } else if (this.ShapeId == 0x05) {
+                this.Count = 3;
+            }
 
             // c# has a memory limit for single objects, so data can't have a 
             // long length so this should be a safe conversion. if not it'll throw here
