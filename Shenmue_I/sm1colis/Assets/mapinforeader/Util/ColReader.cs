@@ -69,7 +69,7 @@ namespace mapinforeader.Util
         public Coli ReadColis(Cols cols) {
             this.BaseStream.Seek(cols.HeaderOffset, SeekOrigin.Begin);
             Coli coli = this.ReadColiMetadata();
-            while (coli != null) {
+            while ((this.BaseStream.Position < (cols.ContentOffset + cols.Size)) && coli != null) {
                 this.BaseStream.Seek(coli.ContentOffset, SeekOrigin.Begin);
                 this.ReadColiObjects(coli);
                 cols.Colis.Add(coli);
@@ -81,7 +81,7 @@ namespace mapinforeader.Util
         public Hght ReadHghts(Cols cols) {
             this.BaseStream.Seek(cols.HeaderOffset, SeekOrigin.Begin);
             Hght hght = this.ReadHghtMetadata();
-            while (hght != null) {
+            while ((this.BaseStream.Position < (cols.ContentOffset + cols.Size)) && hght != null) {
                 this.BaseStream.Seek(hght.ContentOffset, SeekOrigin.Begin);
                 this.ReadHghtObjects(hght);
                 cols.Hghts.Add(hght);

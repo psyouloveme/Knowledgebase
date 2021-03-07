@@ -8,8 +8,20 @@ namespace coliplot {
   public static class ColiPlotter {
 
     public static void PlotHghtObj(HghtObject h, GameObject parent, string labelStart = ""){
-      PlotAsQuads(h.Coordinates, Color.green, $"{labelStart} {h.ShapeId.ToString("X2")}", parent);
+      switch(h.ShapeId) {
+        case 0x06: {
+          PlotAsQuads(h.Coordinates, Color.green, $"{labelStart} {h.ShapeId.ToString("X2")}", parent);
+          break;
+        }
+        case 0x05: {
+          PlotAsPoints(h.Coordinates, Color.green, $"{labelStart} {h.ShapeId.ToString("X2")}", parent);
+          break;
+        }
+        default:
+          break;
+      }
     }
+
     public static void PlotColiObj(ColiObject c, GameObject parent, string labelStart = "") {
       switch(c.ShapeId) {
         case 1: {
@@ -25,13 +37,13 @@ namespace coliplot {
         case 3: {
           var coli = (ColiType3)c;
           var name = BitConverter.ToString(BitConverter.GetBytes(coli.Data[0]));
-          PlotAsPoint(coli.Coordinate, Color.green, $"{labelStart} 03 {name}", parent);
+          PlotAsPoint(coli.Coordinate, Color.cyan, $"{labelStart} 03 {name}", parent);
           break;
         }
         case 5: {
           var coli = (ColiType5)c;
           var name = BitConverter.ToString(BitConverter.GetBytes(coli.Data[0]));
-          PlotAsPoint(coli.Coordinate, Color.green, $"{labelStart} 03 {name}", parent);
+          PlotAsPoint(coli.Coordinate, Color.yellow, $"{labelStart} 05 {name}", parent);
           break;
         }
       }

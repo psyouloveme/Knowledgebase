@@ -93,7 +93,9 @@ namespace mapinforeader.Models.ColsSections {
         private void PopulateCoordinates(BinaryReader reader, long position) {
             reader.BaseStream.Seek(position, SeekOrigin.Begin);
             // skip the count, since that's already stored
-            reader.BaseStream.Seek(HghtObject.UINT32_SIZE, SeekOrigin.Current);
+            if (this.ShapeId == 0x06){
+                reader.BaseStream.Seek(HghtObject.UINT32_SIZE, SeekOrigin.Current);
+            }
             // read the coordinates
             for (int i = 0; i < this.Count; i++) {
                 Vector3 vec = new Vector3();

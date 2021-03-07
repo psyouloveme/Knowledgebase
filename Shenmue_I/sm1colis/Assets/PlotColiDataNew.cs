@@ -23,7 +23,12 @@ public class PlotColiDataNew : MonoBehaviour {
     Cols cols = null;
     Stream s = new MemoryStream(asset.bytes);
     using (ColsReader r = new ColsReader(s)) {
-      cols = r.ReadCols();
+      try {
+        cols = r.ReadCols();
+      } catch (Exception e) {
+        Debug.Log("Fuck");
+        Debug.LogException(e);
+      }
     }
     if (cols == null || cols.Colis == null || cols.Colis.Count == 0) {
       Debug.Log("No collision found!");
@@ -34,6 +39,7 @@ public class PlotColiDataNew : MonoBehaviour {
     for (int coliIdx = 0; coliIdx < cols.Colis.Count; coliIdx++) {
       var coli = cols.Colis[coliIdx];
       var coliGameObj = new GameObject();
+      coliGameObj.transform.SetParent(gameObject.transform);
       coliGameObj.name = $"COLI {coliIdx}";
       for (int coliObjIdx = 0; coliObjIdx < coli.ColiDatas.Count; coliObjIdx++) {
         ColiPlotter.PlotColiObj(coli.ColiDatas[coliObjIdx], coliGameObj, $"COLI {coliIdx}");
@@ -41,10 +47,11 @@ public class PlotColiDataNew : MonoBehaviour {
     }
 
     // Plot the hghts
-    for (int hghtIdx = 0; hghtIdx < cols.Colis.Count; hghtIdx++) {
+    for (int hghtIdx = 0; hghtIdx < cols.Hghts.Count; hghtIdx++) {
       var hght = cols.Hghts[hghtIdx];
       var hghtGameObj = new GameObject();
       hghtGameObj.name = $"HGHT {hghtIdx}";
+      hghtGameObj.transform.SetParent(gameObject.transform);
       for (int hghtObjIdx = 0; hghtObjIdx < hght.HghtDatas.Count; hghtObjIdx++) {
         ColiPlotter.PlotHghtObj(hght.HghtDatas[hghtObjIdx], hghtGameObj, $"HGHT {hghtIdx}");
       }

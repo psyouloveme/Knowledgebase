@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using mapinforeader.Models.ColiObjects;
-using mapinforeader.Models.ColsSections;
 using mapinforeader.Models.MapinfoSections;
 using mapinforeader.Util;
 
@@ -9,7 +7,7 @@ namespace mapinforeader
 {   
     class Program
     {
-        private const string FILE_NAME = "./Reference/JOMO_MAPINFO.BIN.bytes";
+        private const string FILE_NAME = "./COLIMBUI.PKS";
         static void Main(string[] args)
         {
             if (!File.Exists(FILE_NAME))

@@ -74,7 +74,7 @@ namespace mapinforeader.Models.ColsSections {
                 this.Count = reader.ReadUInt32();
                 reader.BaseStream.Seek(-HghtObject.UINT32_SIZE, SeekOrigin.Current);
             } else if (this.ShapeId == 0x05) {
-                this.Count = 3;
+                this.Count = 1;
             }
 
             // c# has a memory limit for single objects, so data can't have a 
@@ -92,8 +92,11 @@ namespace mapinforeader.Models.ColsSections {
         ///<param name="position">The starting offset (from the stream's beginning) to read data from</param>
         private void PopulateCoordinates(BinaryReader reader, long position) {
             reader.BaseStream.Seek(position, SeekOrigin.Begin);
+
             // skip the count, since that's already stored
-            reader.BaseStream.Seek(HghtObject.UINT32_SIZE, SeekOrigin.Current);
+            if (this.ShapeId == 0x06) {
+              reader.BaseStream.Seek(HghtObject.UINT32_SIZE, SeekOrigin.Current);
+            }            
             // read the coordinates
             for (int i = 0; i < this.Count; i++) {
                 Vector3 vec = new Vector3();
