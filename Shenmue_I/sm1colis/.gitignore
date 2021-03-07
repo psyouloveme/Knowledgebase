@@ -78,4 +78,13 @@ crashlytics-build.properties
 /[Aa]ssets/disc3/
 /[Aa]ssets/disc3.meta
 /[Aa]ssets/SCENE
+/[Aa]ssets/SCENE.meta
 /[Aa]ssets/mapinfos
+/[Aa]ssets/*.bin
+/[Aa]ssets/*.bin.meta
+/[Aa]ssets/*.BIN
+/[Aa]ssets/*.BIN.meta
+/[Aa]ssets/*.bin.bytes
+/[Aa]ssets/*.bin.bytes.meta
+/[Aa]ssets/*.BIN.bytes
+/[Aa]ssets/*.BIN.bytes.meta
